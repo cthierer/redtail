@@ -14,3 +14,5 @@ riot.mixin({ helloWorld })
 if (window) {
   window.riot = riot
 }
+
+export default { riot }

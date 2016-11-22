@@ -28,7 +28,8 @@
     "test:unit": "nyc mocha --require ./test/entry --recursive ./test/unit",
     "posttest:unit": "nyc --lines 90 --statements 90 report --reporter=lcov --reporter=json-summary",
     "test:lint": "eslint --ext .js src",
-    "watch": "nodemon --watch src --exec 'npm run restart'"
+    "watch": "nodemon --watch src --exec 'npm run restart'",
+    "bin:initTables": "node app/bin/initTables"
   },
   "repository": {
     "type": "git",
@@ -78,7 +79,10 @@
   },
   "dependencies": {
     "bluebird": "^3.4.6",
+    "config": "^1.24.0",
     "express": "^4.14.0",
-    "riot": "^2.6.7"
+    "mysql": "^2.12.0",
+    "riot": "^2.6.7",
+    "sequelize": "^3.27.0"
   }
 }

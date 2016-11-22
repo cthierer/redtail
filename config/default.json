@@ -1,0 +1,12 @@
+{
+  "db": {
+    "database": "redtail",
+    "username": "redtail",
+    "password": "",
+    "options": {
+      "dialect": "mysql",
+      "host": "localhost",
+      "port": 3306
+    }
+  }
+}

@@ -36,3 +36,8 @@ For example: `npm run build`.
 | Command | Description                                                                |
 |---------|----------------------------------------------------------------------------|
 | `watch` | Serve the application locally, and rebuild then restart when code changes. |
+
+## Configuration
+
+The application uses [node-config](https://github.com/lorenwest/node-config)
+to manage application configurations.

@@ -5,8 +5,8 @@
  * File will not be run through babel, so it must use standard Node 6 features.
  */
 
-const app = require('./app/server').default
+const app = require('./app').default
 
-app.listen(process.env.PORT || 3000, () => {
+app.server.listen(process.env.PORT || 3000, () => {
   console.log('server started') // eslint-disable-line no-console
 })

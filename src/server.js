@@ -6,6 +6,12 @@
 import express from 'express'
 import helloWorld from './modules/hello-world'
 
+/**
+ * The initialized and configured Express application.
+ * @see http://expressjs.com/en/4x/api.html#express
+ * @see http://expressjs.com/en/4x/api.html#app
+ * @type {object}
+ */
 const app = express()
 
 // serve the client application files
