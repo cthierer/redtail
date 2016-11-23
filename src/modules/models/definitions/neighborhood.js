@@ -1,5 +1,5 @@
 /**
- * @module redtail/modules/db/definitions/neighborhood
+ * @module redtail/modules/models/definitions/neighborhood
  */
 
 import Sequelize from 'sequelize'

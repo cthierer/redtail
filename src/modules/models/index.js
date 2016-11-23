@@ -1,10 +1,11 @@
 /**
- * @module redtail/modules/db
+ * @module redtail/modules/models
  */
 
 import Sequelize from 'sequelize'
 import Config from 'config'
-import initDefinitions from './definitions'
+import * as definitions from './definitions'
+import * as Logger from '../logger'
 
 /**
  * The database configuration object from the application configuration.
@@ -17,16 +18,39 @@ import initDefinitions from './definitions'
  * @see http://docs.sequelizejs.com/en/v3/api/sequelize/#new-sequelizedatabase-usernamenull-passwordnull-options
  * @type {Object}
  */
-const config = Config.get('db')
+const config = Config.get('models.db')
+
+/**
+ * Logger for the models module.
+ * @type {Object}
+ */
+const logger = Logger.get('models')
+
+/**
+ * Logger for sequelize. This is a child logger to the main module logger,
+ * with the additional key of "source" set to "sequelize".
+ * @type {Object}
+ */
+const sequelizeLogger = logger.child({ source: 'sequelize' })
 
 /**
  * Sequelize instance, initialized to the database connection defined in the
- * application `db` configuration object.
+ * application `models.db` configuration object.
  *
  * @see http://docs.sequelizejs.com/en/v3/api/sequelize/
  * @type {Sequelize}
  */
-const sequelize = new Sequelize(config.database, config.username, config.password, config.options)
+const sequelize = new Sequelize(config.database, config.username, config.password,
+  Object.assign({
+    logging: (...args) => {
+      // write sequelize logs to the module log at the trace option
+      // logging can be disabled completeley by setting `logging: false` in the
+      // database configuration options
+      if (sequelizeLogger.trace()) {
+        sequelizeLogger.trace(...args)
+      }
+    }
+  }, config.options))
 
 /**
  * Initialized Sequelize models, loaded from the ./models directory.
@@ -37,7 +61,7 @@ const sequelize = new Sequelize(config.database, config.username, config.passwor
  * @see http://docs.sequelizejs.com/en/v3/api/model/
  * @type {Object}
  */
-const models = initDefinitions(sequelize, {
+const models = definitions.init(sequelize, {
   timestamps: true,
   paranoid: false,
   underscored: true

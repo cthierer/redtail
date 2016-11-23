@@ -29,7 +29,9 @@
     "posttest:unit": "nyc --lines 90 --statements 90 report --reporter=lcov --reporter=json-summary",
     "test:lint": "eslint --ext .js src",
     "watch": "nodemon --watch src --exec 'npm run restart'",
-    "bin:initTables": "node app/bin/initTables"
+    "bin:initData": "run-s bin:initTables bin:populateData",
+    "bin:initTables": "node app/bin/initTables",
+    "bin:populateData": "node app/bin/populateData"
   },
   "repository": {
     "type": "git",
@@ -79,9 +81,11 @@
   },
   "dependencies": {
     "bluebird": "^3.4.6",
+    "bunyan": "^1.8.5",
     "config": "^1.24.0",
     "express": "^4.14.0",
     "mysql": "^2.12.0",
+    "popsicle": "^8.2.0",
     "riot": "^2.6.7",
     "sequelize": "^3.27.0"
   }

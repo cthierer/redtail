@@ -1,5 +1,7 @@
 {
-  "db": {
-    "password": "DB_PASSWORD"
+  "models": {
+    "db": {
+      "password": "DB_PASSWORD"
+    }
   }
 }

@@ -1,12 +1,38 @@
 {
-  "db": {
-    "database": "redtail",
-    "username": "redtail",
-    "password": "",
-    "options": {
-      "dialect": "mysql",
-      "host": "localhost",
-      "port": 3306
+  "logger": {
+    "name": "redtail",
+    "level": "info",
+    "src": false
+  },
+  "models": {
+    "db": {
+      "database": "redtail",
+      "username": "redtail",
+      "password": "",
+      "options": {
+        "dialect": "mysql",
+        "host": "localhost",
+        "port": 3306
+      }
+    }
+  },
+  "neighborhoods": {
+    "populate": {
+      "remote": {
+        "method": "GET",
+        "url": "https://data.baltimorecity.gov/resource/h3fx-54q3.json",
+        "query": {
+          "$select": "label,shape_area"
+        }
+      },
+      "mapping": {
+        "label": {
+          "column": "name"
+        },
+        "shape_area": {
+          "column": "area"
+        }
+      }
     }
   }
 }

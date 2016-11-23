@@ -1,15 +1,15 @@
 /**
- * @module redtail/modules/db/definitions
+ * @module redtail/modules/models/definitions
  */
 
-import initNeighborhood from './neighborhood'
+import neighborhood from './neighborhood'
 
 /**
  * Collection of all Sequelize model initializers for the application.
  * This is used to programmatically initialize the models.
  * @type {array}
  */
-const initializers = [initNeighborhood]
+const initializers = [neighborhood]
 
 /**
  * Load all of the module models into the instance of Sequelize.
@@ -18,7 +18,7 @@ const initializers = [initNeighborhood]
  * @returns {Object} Mapping of model name to Sequelize Model definition.
  * @see http://docs.sequelizejs.com/en/v3/docs/models-definition/#configuration
  */
-function initDefinitions(sequelize, options = {}) {
+function init(sequelize, options = {}) {
   return initializers.reduce((loaded, initializeModel) => {
     const modelDefinition = initializeModel(sequelize, options)
     return Object.assign(loaded, {
@@ -27,4 +27,8 @@ function initDefinitions(sequelize, options = {}) {
   }, {})
 }
 
-export default initDefinitions
+export default {
+  neighborhood
+}
+
+export { init }
