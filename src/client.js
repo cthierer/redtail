@@ -3,16 +3,28 @@
  * @module redtail/client
  */
 
-import riot from 'riot'
-import helloWorld from './modules/hello-world'
+import riot from 'riot/riot'
+import * as neighborhoods from './modules/neighborhoods/tags'
 
 /* eslint-env browser */
 
-riot.mixin({ helloWorld })
-
 // load globals on browser window, if this is a browser
-if (window) {
-  window.riot = riot
+window.riot = riot
+
+/**
+ * Mount a tag as the main application tag.
+ * @param {string} tag The tag to mount.
+ * @param {object} state Optional state parameters that should be passed as
+ *  options to the tag. Will be mounted to `opts.state`.
+ */
+function mount(tag, state = {}) {
+  riot.mount('#redtailApp', tag, { state })
 }
+
+// initialize neighborhoods routes
+neighborhoods.init(riot.route, mount, '/neighborhoods/')
+
+// start listining to route changes
+riot.route.start(true)
 
 export default { riot }
