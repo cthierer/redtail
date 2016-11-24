@@ -7,26 +7,6 @@ import * as transformer from '../transformer'
 import * as http from '../data/http'
 
 /**
- * The configuration object used to retrieve data from the remote source
- * and transform it into application model.
- *
- * Expected to have two attributes:
- *  - `remote`: defines how to query the remote endpoint; should match the
- *    format of the popsicle module request options.
- *  - `mapping`: defines how to map the remote model to an application model;
- *    follows the mapping definition defined for the {@link transform} function.
- *
- * Loaded from the 'neighborhoods.populate' configuration object.
- *
- * @type {Object}
- * @see https://github.com/blakeembrey/popsicle#handling-requests
- */
-const config = Object.assign({
-  remote: {},
-  mapping: {}
-}, Config.get('neighborhoods.populate'))
-
-/**
  * Populate the database with neighborhood data retrieved from a remote data
  * source.
  *
@@ -57,6 +37,11 @@ async function populate(models) {
   }
 
   const Neighborhood = models.Neighborhood
+  const config = Object.assign({
+    remote: {},
+    mapping: {}
+  }, Config.get('neighborhoods.populate'))
+
   const raw = await http.getDataAsJSON(config.remote)
   const datas = await transformer.transformAll(raw, config.mapping)
 

@@ -4,6 +4,5 @@
 
 import * as http from './http'
 
-export default {
-  http
-}
+export default { http }
+export { http }

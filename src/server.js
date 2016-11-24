@@ -4,7 +4,9 @@
  */
 
 import express from 'express'
-import helloWorld from './modules/hello-world'
+import models from './modules/models'
+import * as core from './modules/core'
+import * as neighborhoods from './modules/neighborhoods'
 
 /**
  * The initialized and configured Express application.
@@ -14,6 +16,12 @@ import helloWorld from './modules/hello-world'
  */
 const app = express()
 
+app.use(
+  core.middleware.initContext(),  // initialize req.ctx
+  core.middleware.generateId(),   // initilaize req.ctx.requestId
+  core.middleware.initLogger()    // initialize req.ctx.logger
+)
+
 // serve the client application files
 app.use(express.static('dist'))
 
@@ -21,13 +29,12 @@ app.use(express.static('dist'))
 app.use('/docs', express.static('doc'))
 app.use('/coverage', express.static('coverage/lcov-report'))
 
-// serve a custom application endpoint
-app.get('/message', (req, res, next) => {
-  helloWorld.getMessage()
-    .then((message) => {
-      res.send(message)
-      next()
-    })
-})
+app.use('/neighborhoods', neighborhoods.router(models))
+
+app.use(
+  core.middleware.sendResult(),     // send the result to the client
+  core.middleware.handleError(),    // handle any errors
+  core.middleware.recordResponse()  // log the result of each request
+)
 
 export default app

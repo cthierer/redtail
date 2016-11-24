@@ -3,7 +3,6 @@
  */
 
 import populate from './populate'
+import router from './router'
 
-export default {
-  populate
-}
+export { populate, router }

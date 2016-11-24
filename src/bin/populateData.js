@@ -4,7 +4,7 @@
  * @module redtail/bin/populateData
  */
 
-import modules from '../modules'
+import * as modules from '../modules'
 
 const models = modules.models
 
