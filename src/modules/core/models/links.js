@@ -29,6 +29,25 @@ class Links extends DataEmitter {
   }
 
   /**
+   * Add a HATEOAS link.
+   * @param {string} key The identifier for the link.
+   * @param {string|object} href Either the HATEOAS object including an `href`
+   *  attribute, or a URL string of the link that will be set as the `href`
+   *  attribute.
+   */
+  addLink(key, href) {
+    if (!href) {
+      return
+    }
+
+    if (typeof href === 'object') {
+      this.set(key, href)
+    } else {
+      this.set(key, { href })
+    }
+  }
+
+  /**
    * Emit an event to navigate to a specified link, if it exists. If the key
    * has an associated link, this emits the "core.links.navigate" event,
    * passing in the value of the link.

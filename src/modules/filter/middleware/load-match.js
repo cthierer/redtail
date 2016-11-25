@@ -32,7 +32,7 @@ function loadMatch(field, param = field, exact = true) {
         }, 'adding where condition for field %s', field)
       }
 
-      req.ctx.addWhere({ [field]: match })
+      req.ctx.filter.addWhere({ [field]: match })
     } else if (logger.debug()) {
       logger.debug({ match_field: field, match_param: param },
         'no match value for field %s', field)

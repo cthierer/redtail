@@ -37,9 +37,8 @@ const Neighborhood = new data.RESTModel('http://localhost:3000/', endpoint)
  * @returns {State} The updated application state.
  */
 function updateState(state = new State(), path = endpoint, response = {}) {
-  state.result = response.result
+  state.loadResponse(response)
   state.path = path
-  state.links.update(response._links)
   return state
 }
 
@@ -68,19 +67,14 @@ function init(route, mount, basePath = '/') {
 
         // user updated the filter conditions; requery the model
         state.on('core.filter.updated', () => {
-          Neighborhood.findAll({
-            offset: 0,
-            order: state.getSort(),
-            where: state.getFilter()
-          }, state.path).then((utils.functions.partial(updateState, state, state.path)))
+          Neighborhood.findAll(Object.assign(state.getQueryOptions(), { offset: 0 }), state.path)
+            .then((utils.functions.partial(updateState, state, state.path)))
         })
 
         // user updated the sort conditions; requery the model
         state.on('core.sort.updated', () => {
-          Neighborhood.findAll({
-            order: state.getSort(),
-            where: state.getFilter()
-          }, state.path).then((utils.functions.partial(updateState, state, state.path)))
+          Neighborhood.findAll(state.getQueryOptions(), state.path)
+            .then((utils.functions.partial(updateState, state, state.path)))
         })
 
         mount(tags.list, state)

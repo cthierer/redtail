@@ -12,7 +12,7 @@
  */
 function count(model) {
   return (req, res, next) => {
-    model.count(req.ctx.filter)
+    model.count(req.ctx.getFilter())
       .then((total) => {
         req.ctx.count = total
         next()

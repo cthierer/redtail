@@ -2,7 +2,7 @@
  * @module redtail/modules/core/middleware/initContext
  */
 
-import Context from '../models/context'
+import State from '../models/state'
 
 /**
  * Initialize a fresh request context. The request context encapsulates data
@@ -12,11 +12,12 @@ import Context from '../models/context'
  * The request context is loaded on `req.ctx`.
  *
  * @returns {function} Middleware function.
- * @see {Context}
+ * @see {State}
  */
 function initContext() {
   return (req, res, next) => {
-    req.ctx = new Context()
+    req.ctx = new State({ sort: { allowMultiple: true } })
+    req.state = req.ctx
     next()
   }
 }

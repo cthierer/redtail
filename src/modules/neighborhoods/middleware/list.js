@@ -11,7 +11,7 @@
  */
 function list(model) {
   return (req, res, next) => {
-    model.findAll(req.ctx.filter)
+    model.findAll(req.ctx.getQueryOptions())
       .then(instances => instances.map(instance => instance.get()))
       .then((results) => {
         req.ctx.status = 200

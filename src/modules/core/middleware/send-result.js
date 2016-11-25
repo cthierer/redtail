@@ -13,14 +13,14 @@
  */
 function sendResult() {
   return (req, res, next) => {
-    const body = req.ctx.responseBody
+    const body = req.ctx.toResponse()
 
     if (body) {
       // status should be 200, unless it was forcefully set by something else
-      const status = req.ctx.statusSet ? req.ctx.status : 200
+      const status = req.ctx.status ? req.ctx.status : 200
       res.status(status).send(body)
     } else {
-      res.status(req.ctx.status)
+      res.status(req.ctx.status || 404)
     }
 
     next()

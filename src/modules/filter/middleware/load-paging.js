@@ -63,8 +63,8 @@ function loadPaging(defaultLimit = 10, paramLimit = 'limit', paramOffset = 'offs
         logger.info({ limit, offset }, 'setting result offset %s, limit %s', offset, limit)
       }
 
-      req.ctx.limit = limit
-      req.ctx.offset = offset
+      req.ctx.filter.limit = limit
+      req.ctx.filter.offset = offset
     } catch (err) {
       if (logger.debug()) {
         logger.debug({ err }, 'unable to parse parameter: %s', err.message)

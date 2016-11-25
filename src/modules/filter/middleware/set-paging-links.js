@@ -59,9 +59,9 @@ function generateOffsets(offset, limit, total) {
 function setPagingLinks() {
   return (req, res, next) => {
     const logger = req.ctx.logger.child({ middleware: 'setPagingLinks' })
-    const limit = req.ctx.limit
+    const limit = req.ctx.filter.limit
+    const offset = req.ctx.filter.offset
     const total = req.ctx.count
-    const offset = req.ctx.offset
 
     if (typeof limit === 'number' && typeof offset === 'number') {
       const offsetValues = generateOffsets(offset, limit, total)
@@ -75,9 +75,9 @@ function setPagingLinks() {
             'calculated offset for "%s" link: %s', key, value)
         }
 
-        req.ctx.addLink(key, url.format({
+        req.ctx.links.addLink(key, url.format({
           pathname,
-          query: Object.assign({}, req.query, { offset: value })
+          query: Object.assign({}, req.query, { offset: value, limit })
         }))
       })
     }

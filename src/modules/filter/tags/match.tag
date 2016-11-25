@@ -9,8 +9,8 @@
     this.filter = opts.filter || {}
 
     this.submit = () => {
-      if (this.filter && this.filter.set) {
-        this.filter.set(opts.name, this[opts.name].value)
+      if (this.filter && this.filter.addWhere) {
+        this.filter.addWhere({ [opts.name]: this[opts.name].value })
       }
 
       return false

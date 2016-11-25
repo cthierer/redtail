@@ -2,7 +2,7 @@
  * @module redtail/modules/core/models
  */
 
-import Context from './context'
+import DataEmitter from './data-emitter'
 import State from './state'
 
-export { Context, State }
+export { DataEmitter, State }

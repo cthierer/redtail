@@ -24,7 +24,7 @@ function handleError() {
     const status = req.ctx.status
     const message = Array.isArray(err) ? err.map(error => error.message).join() : err.message
 
-    if (req.ctx.statusSet && status >= 400 && status < 500) {
+    if (status && status >= 400 && status < 500) {
       if (logger.info()) {
         logger.info({ err }, 'encountered a bad request: %s', message)
       }

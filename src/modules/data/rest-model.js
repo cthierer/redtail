@@ -56,7 +56,7 @@ class RESTModel {
     }
 
     if (options.order !== undefined) {
-      query.sort = options.order
+      query.sort = options.order.map(parts => `${parts[0]},${parts[1]}`)
     }
 
     return http.getDataAsJSON({

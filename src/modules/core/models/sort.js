@@ -39,17 +39,26 @@ class Sort extends DataEmitter {
   }
 
   /**
-   * Generate a string representation of the sort defined for the specified
-   * field; of the format `fild;dir`, where "dir" is one of "asc" or "desc".
-   * @returns {string} The string representation for the field, if the field
+   * Generate a consolidated representation of the sort defined for the
+   * specified field.
+   * @returns {array} The representation for the field, if the field
    *  is defined on the data object; otherwise, returns null.
    */
-  _getFieldStr(field) {
+  _getField(field) {
     const direction = this.getDirection(field)
     if (direction) {
-      return `${field},${direction}`
+      return [field, direction]
     }
     return null
+  }
+
+  /**
+   * Add a sort parameter.
+   * @param {string} field The field to sort on.
+   * @param {string} order The direction of the sort ("asc", "desc").
+   */
+  addSort(field, order) {
+    this.set(field, order)
   }
 
   /**
@@ -61,13 +70,13 @@ class Sort extends DataEmitter {
    */
   get(field) {
     if (field) {
-      return this._getFieldStr(field)
+      return this._getField(field)
     }
 
     return this.keys.reduce((fields, key) => {
-      const fieldStr = this._getFieldStr(key)
-      if (fieldStr) {
-        return fields.concat(fieldStr)
+      const fieldData = this._getField(key)
+      if (fieldData) {
+        return fields.concat([fieldData])
       }
       return fields
     }, [])

@@ -50,7 +50,7 @@ function loadSort(fields = [], defaultOrder = LEGAL_ORDER[0]) {
             'adding sort on field: %s, %s', field, order)
         }
 
-        req.ctx.addSort(field, order)
+        req.ctx.sort.addSort(field, order)
       } catch (err) {
         if (err instanceof ValidationError) {
           return last.concat(err)
