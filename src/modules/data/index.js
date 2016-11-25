@@ -3,6 +3,6 @@
  */
 
 import * as http from './http'
+import RESTModel from './rest-model'
 
-export default { http }
-export { http }
+export { http, RESTModel }

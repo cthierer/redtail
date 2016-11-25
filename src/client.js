@@ -18,7 +18,15 @@ window.riot = riot
  *  options to the tag. Will be mounted to `opts.state`.
  */
 function mount(tag, state = {}) {
-  riot.mount('#redtailApp', tag, { state })
+  const mounted = riot.mount('#redtailApp', tag, { state })
+
+  mounted.forEach((mountedTag) => {
+    if (typeof state.on === 'function') {
+      state.on('core.state.updated', (updated) => {
+        mountedTag.update({ state: updated })
+      })
+    }
+  })
 }
 
 // initialize neighborhoods routes

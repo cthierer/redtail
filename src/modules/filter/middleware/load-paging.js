@@ -2,7 +2,6 @@
  * @module redtail/modules/filter/middlware/loadPaging
  */
 
-import url from 'url'
 import Validator, { ValidationError } from '../validator'
 
 /**
@@ -42,45 +41,6 @@ function parseOffset(offsetStr, field) {
 }
 
 /**
- * Calculate the offset value to get the "previous" page of results.
- * @param {integer} offset The current offset.
- * @param {integer} limit The maximum number of results allowed.
- * @returns {object} The previous offset parameter value, or 0.
- */
-function getPrevOffset(offset, limit) {
-  if (offset > 0) {
-    const diff = offset - limit
-    const previous = diff >= 0 ? diff : 0
-    return { previous }
-  }
-  return {}
-}
-
-/**
- * Calculate the offset value to get the "next" page of results.
- * @param {integer} offset The current offset.
- * @param {integer} limit The maximum number of results allowed.
- * @returns {object} The next offset parameter value.
- */
-function getNextOffset(offset, limit) {
-  const next = offset + limit
-  return { next }
-}
-
-/**
- * Calculate the offset values to link to neighboring pages.
- *
- * Triggers the error handler if either limit or offset value is invalid.
- *
- * @param {integer} offset The current offset.
- * @param {integer} limit The maximum number of results allowed.
- * @returns {object} Mapping of link identifiers to offset values.
- */
-function generateOffsets(offset, limit) {
-  return Object.assign({}, getPrevOffset(offset, limit), getNextOffset(offset, limit))
-}
-
-/**
  * Load the paging parameters from the request into the database filter.
  * @param {integer} defaultLimit The default limit parameter, if none is
  *  specified in the request; defaults to 10. Must be a positive, non-zero
@@ -92,8 +52,7 @@ function generateOffsets(offset, limit) {
  * @returns {function} Middleware function.
  */
 function loadPaging(defaultLimit = 10, paramLimit = 'limit', paramOffset = 'offset') {
-  // validate the paging parameters, and set them on the context
-  const setPaging = (req, res, next) => {
+  return (req, res, next) => {
     const logger = req.ctx.logger.child({ middleware: 'loadPaging' })
 
     try {
@@ -120,38 +79,6 @@ function loadPaging(defaultLimit = 10, paramLimit = 'limit', paramOffset = 'offs
 
     return next()
   }
-
-  // generate the HATEOAS links for paging through results
-  // uses the paging parameters generated in setPaging; assumed to be valid
-  const setLinks = (req, res, next) => {
-    const logger = req.ctx.logger.child({ middleware: 'loadPaging' })
-    const limit = req.ctx.limit
-    const offset = req.ctx.offset
-
-    if (typeof limit === 'number' && typeof offset === 'number') {
-      const offsetValues = generateOffsets(offset, limit)
-      const pathname = url.parse(req.originalUrl).pathname
-
-      Object.keys(offsetValues).forEach((key) => {
-        const value = offsetValues[key]
-
-        if (logger.debug()) {
-          logger.debug({ hateoas_key: key, hateoas_offset: value },
-            'calculated offset for "%s" link: %s', key, value)
-        }
-
-        req.ctx.addLink(key, url.format({
-          pathname,
-          query: Object.assign({}, req.query, { offset: value })
-        }))
-      })
-    }
-
-    next()
-  }
-
-  // composite middleware - run multiple functions
-  return [setPaging, setLinks]
 }
 
 export default loadPaging

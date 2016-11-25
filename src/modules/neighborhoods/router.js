@@ -19,7 +19,8 @@ function init(models) {
     filter.middleware.loadSort(['name', 'area']),
     filter.middleware.loadMatch('name', 'search', false),
     middleware.list(models.Neighborhood),
-    middleware.count(models.Neighborhood)
+    middleware.count(models.Neighborhood),
+    filter.middleware.setPagingLinks()
   )
 
   return router

@@ -3,6 +3,6 @@
  */
 
 import Context from './context'
+import State from './state'
 
-export default { Context }
-export { Context }
+export { Context, State }
