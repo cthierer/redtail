@@ -1,4 +1,48 @@
 
-h1 {
-  text-decoration: underline;
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+
+$color-featured: #e01d1d;
+$color-featured-dark: #6d0e0e;
+
+.octicon {
+  display: inline-block;
+  vertical-align: text-top;
+  fill: currentColor;
+}
+
+.color-featured {
+  color: $color-featured;
+}
+
+.bg-color-featured {
+  background-color: $color-featured-dark;
+
+  &,
+  a,
+  a:link,
+  a:visited,
+  a:active,
+  a:focus,
+  a:hover {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  a:active,
+  a:focus,
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
+body {
+  background-color: $color-featured-dark;
+
+  .wrapper {
+    background-color: #fff;
+  }
+}
+
+#redtailFooter {
+  margin-top: 15px;
 }

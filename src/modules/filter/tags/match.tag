@@ -1,7 +1,7 @@
 <filter-match>
   <div class="match form-group">
     <label>
-      { opts.label }
+      <yield/>
       <input type="text" name={ opts.name } value={ filter[opts.name] } onchange={ submit }/>
     </label>
   </div>

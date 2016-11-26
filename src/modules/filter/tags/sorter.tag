@@ -1,11 +1,11 @@
 <filter-sorter>
   <a class="sorter" href="#" onclick={ submit }>
     <span class="field">{ opts.label }</span>
-    <span class="direction desc" show={ get() == 'asc' }>
-      [asc]
+    <span class="direction asc" show={ get() == 'asc' }>
+      <core-icon name="triangle-up" alt="[asc]"></core-icon>
     </span>
-    <span class="direction asc" show={ get() == 'desc'}>
-      [desc]
+    <span class="direction desc" show={ get() == 'desc'}>
+      <core-icon name="triangle-down" alt="[desc]"></core-icon>
     </span>
   </a>
   <script type="babel">

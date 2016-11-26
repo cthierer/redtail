@@ -3,7 +3,10 @@
  * @module redtail/client
  */
 
+import 'bootstrap'
+
 import riot from 'riot/riot'
+import octicons from 'octicons'
 import * as actions from './modules/core/actions'
 import * as utils from './modules/utils'
 import * as neighborhoods from './modules/neighborhoods/tags'
@@ -49,11 +52,15 @@ function mixin() {
 }
 
 riot.mixin({
+  icons: octicons,
   initState: actions.initState()
 })
 
 // initialize neighborhoods routes
-neighborhoods.init(route('/neighborhoods'), mount(), mixin())
+neighborhoods.init(route('neighborhoods'), mount(), mixin())
+
+// redirect root to neighborhoods
+route('')('', () => riot.route('neighborhoods/'))
 
 // start listining to route changes
 riot.route.start(true)

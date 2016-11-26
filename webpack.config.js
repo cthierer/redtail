@@ -1,3 +1,5 @@
+/* eslint-disable import/no-extraneous-dependencies */
+const webpack = require('webpack')
 
 module.exports = {
   entry: './src/client.js',
@@ -16,7 +18,18 @@ module.exports = {
           plugins: ['transform-runtime'],
           babelrc: false
         }
+      },
+      {
+        test: /\.json$/,
+        loader: 'json-loader'
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.ProvidePlugin({
+      jQuery: 'jquery',
+      $: 'jquery',
+      'window.Tether': 'tether'
+    })
+  ]
 }
