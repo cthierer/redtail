@@ -124,6 +124,15 @@ class Sort extends DataEmitter {
         this.set(field, ASC)
     }
   }
+
+  /**
+   * Update the sort object with the given value object.
+   * Does not emit any events.
+   * @param {object} value Update the sort object to match this object.
+   */
+  update(value) {
+    this._update(value)
+  }
 }
 
 export default Sort

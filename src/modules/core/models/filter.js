@@ -1,5 +1,26 @@
+/**
+ * @module redtail/modules/core/models/filter
+ */
 
 import DataEmitter from './data-emitter'
+
+/**
+ * The identifier for the offset value in the filter object.
+ * @type {string}
+ */
+const OFFSET = 'offset'
+
+/**
+ * The identifier for the limit value in the filter object.
+ * @type {string}
+ */
+const LIMIT = 'limit'
+
+/**
+ * The identifier for the where value in the filter object.
+ * @type {string}
+ */
+const WHERE = 'where'
 
 /**
  * Encapsulate information filter information, including:
@@ -19,7 +40,7 @@ class Filter extends DataEmitter {
    * @return {integer} The maximum number of results to match.
    */
   get limit() {
-    return this.get('limit')
+    return this.get(LIMIT)
   }
 
   /**
@@ -27,14 +48,14 @@ class Filter extends DataEmitter {
    * @param {integer} value The maximum number of results to match.
    */
   set limit(value) {
-    this.set('limit', value)
+    this.set(LIMIT, value)
   }
 
   /**
    * @return {integer} The starting index for the result set.
    */
   get offset() {
-    return this.get('offset')
+    return this.get(OFFSET)
   }
 
   /**
@@ -42,7 +63,7 @@ class Filter extends DataEmitter {
    * @param {integer} value The starting index for the result set.
    */
   set offset(value) {
-    this.set('offset', value)
+    this.set(OFFSET, value)
   }
 
   /**
@@ -51,10 +72,23 @@ class Filter extends DataEmitter {
    */
   addWhere(condition) {
     if (condition) {
-      const where = this.get('where') || {}
-      this.set('where', Object.assign(where, condition))
+      const where = this.get(WHERE) || {}
+      this._set(OFFSET, 0)
+      this._set(WHERE, Object.assign(where, condition))
+      this.emit('core.filter.whereUpdated')
+      this.updated()
     }
+  }
+
+  /**
+   * Update the filter object with the given value object.
+   * Does not emit any events.
+   * @param {object} value Update the filter object to match this object.
+   */
+  update(value) {
+    this._update(value)
   }
 }
 
 export default Filter
+export { OFFSET, LIMIT, WHERE }

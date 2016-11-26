@@ -2,9 +2,8 @@
  * @module redtail/modules/neighborhoods/tags
  */
 
+import * as actions from '../actions'
 import * as data from '../../data'
-import * as utils from '../../utils'
-import State from '../../core/models/state'
 
 /**
  * The base endpoint for neighborhoods.
@@ -30,55 +29,24 @@ const tags = {
 const Neighborhood = new data.RESTModel('http://localhost:3000/', endpoint)
 
 /**
- * Update the application state with an API response.
- * @param {State} state The application state to update.
- * @param {string} path The path that updated the state.
- * @param {object} response The result of the API query.
- * @returns {State} The updated application state.
- */
-function updateState(state = new State(), path = endpoint, response = {}) {
-  state.loadResponse(response)
-  state.path = path
-  return state
-}
-
-/**
  * Perform necessary initialization to load tags into the application.
  * @param {function} route Router function, used to match routes and fire
  *  actions. Matches the API exposed by Riot.
  * @param {function} mount A function that will mount a tag in the application.
  *  Called with the tag name (string), and an object with data to pass in as
  *  options when mounting.
- * @param {string} basePath The base path for all routes loaded by this
- *  module; defaults to "/".
+ * @param {function} mixin A function that loads a mixin into the application
+ *  context. Follows the same conventions as Riot mixins.
  * @see http://riotjs.com/api/route/
+ * @see http://riotjs.com/api/#mixins
  */
-function init(route, mount, basePath = '/') {
-  route(basePath, () => {
-    Neighborhood.findAll()
-      .then(utils.functions.partial(updateState, new State(), endpoint))
-      .then((state) => {
-        // use the HATEOAS links from the API to navigate pagination
-        state.on('core.links.navigate', (toLink) => {
-          const href = toLink.href
-          Neighborhood.findAll({}, href)
-            .then((utils.functions.partial(updateState, state, href)))
-        })
+function init(route, mount, mixin) {
+  route('/', () => {
+    mount(tags.list)
+  })
 
-        // user updated the filter conditions; requery the model
-        state.on('core.filter.updated', () => {
-          Neighborhood.findAll(Object.assign(state.getQueryOptions(), { offset: 0 }), state.path)
-            .then((utils.functions.partial(updateState, state, state.path)))
-        })
-
-        // user updated the sort conditions; requery the model
-        state.on('core.sort.updated', () => {
-          Neighborhood.findAll(state.getQueryOptions(), state.path)
-            .then((utils.functions.partial(updateState, state, state.path)))
-        })
-
-        mount(tags.list, state)
-      })
+  mixin('neighborhoods', {
+    loadAll: actions.loadAll(Neighborhood)
   })
 }
 

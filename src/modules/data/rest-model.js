@@ -6,6 +6,24 @@ import * as http from './http'
 import * as utils from '../utils'
 
 /**
+ * The identifier for the "limit" parameter in the querystring.
+ * @type {string}
+ */
+const LIMIT = 'limit'
+
+/**
+ * The identifier for the "offset" parameter in the querystring.
+ * @type {string}
+ */
+const OFFSET = 'offset'
+
+/**
+ * The identifier for the "sort" parameter in the querystring.
+ * @type {string}
+ */
+const SORT = 'sort'
+
+/**
  * Model definition for interacting with data over a RESTful HTTP interface.
  * Intended to be interchangeable with the Sequelize Model class.
  * @class
@@ -28,6 +46,12 @@ class RESTModel {
      * @type {string}
      */
     this.endpoint = endpoint
+
+    /**
+     * The full URL to the endpoint.
+     * @type {string}
+     */
+    this.url = utils.urls.join(this.baseUrl, this.endpoint)
   }
 
   /**
@@ -39,31 +63,28 @@ class RESTModel {
    * @param {integer} options.offset The offset index to start at.
    * @param {array} options.order An array of `field,direction` strings
    *  describing which fields to order by, and in which direction.
-   * @param {string} endpoint Override the default endpoint with a custom
-   *  endpoint for this query; optional.
    * @returns {Promise} Resolves to the result of the data call.
    * @todo Format response to be more Sequelize-like.
    */
-  findAll(options = {}, endpoint = this.endpoint) {
+  findAll(options = {}) {
+    const url = this.url
     const query = Object.assign({}, options.where || {})
 
     if (options.limit !== undefined) {
-      query.limit = options.limit
+      query[LIMIT] = options.limit
     }
 
     if (options.offset !== undefined) {
-      query.offset = options.offset
+      query[OFFSET] = options.offset
     }
 
     if (options.order !== undefined) {
-      query.sort = options.order.map(parts => `${parts[0]},${parts[1]}`)
+      query[SORT] = options.order.map(parts => `${parts[0]},${parts[1]}`)
     }
 
-    return http.getDataAsJSON({
-      url: utils.urls.join(this.baseUrl, endpoint),
-      query
-    })
+    return http.getDataAsJSON({ url, query })
   }
 }
 
 export default RESTModel
+export { LIMIT, OFFSET, SORT }

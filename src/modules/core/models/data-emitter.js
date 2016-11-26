@@ -48,6 +48,16 @@ class DataEmitter extends EventEmitter {
   }
 
   /**
+   * Set the value for a key. Overwrites an existing value, if defined.
+   * Does not emit any events.
+   * @param {string} key The key of the value to update.
+   * @param {any} value The new value of the key.
+   */
+  _set(key, value) {
+    this._data[key] = value
+  }
+
+  /**
    * Update the data object to match the specified object, clearing out any
    * existing data that has been set.
    * Does _not_ emit any events.
@@ -103,7 +113,7 @@ class DataEmitter extends EventEmitter {
    * @see {DataEmitter#updated}
    */
   set(key, value) {
-    this._data[key] = value
+    this._set(key, value)
     this.updated()
   }
 

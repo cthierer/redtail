@@ -4,6 +4,8 @@
  */
 
 import riot from 'riot/riot'
+import * as actions from './modules/core/actions'
+import * as utils from './modules/utils'
 import * as neighborhoods from './modules/neighborhoods/tags'
 
 /* eslint-env browser */
@@ -13,24 +15,45 @@ window.riot = riot
 
 /**
  * Mount a tag as the main application tag.
- * @param {string} tag The tag to mount.
- * @param {object} state Optional state parameters that should be passed as
- *  options to the tag. Will be mounted to `opts.state`.
+ * @returns {function} Returns a mount function that when called with a tag
+ *  name and options object, will mount the tag as the main applicaiton tag.
  */
-function mount(tag, state = {}) {
-  const mounted = riot.mount('#redtailApp', tag, { state })
-
-  mounted.forEach((mountedTag) => {
-    if (typeof state.on === 'function') {
-      state.on('core.state.updated', (updated) => {
-        mountedTag.update({ state: updated })
-      })
-    }
-  })
+function mount() {
+  return (tag, opts = {}) => {
+    riot.mount('#redtailApp', tag, opts)
+  }
 }
 
+/**
+ * Define an action for a given route.
+ * @param {string} basePath The base path for all routes defined through
+ *  the resulting route function.
+ * @returns {function} The route function that when called, configured Riot
+ *  to route the application to the specifid path.
+ */
+function route(basePath) {
+  return (path, action) => {
+    riot.route(utils.urls.join(basePath, path), action)
+  }
+}
+
+/**
+ * Define a mixin to load in the application.
+ * @returns {function} The mixinim function that when called, loads the mixin
+ *  into Riot.
+ */
+function mixin() {
+  return (...args) => {
+    riot.mixin(...args)
+  }
+}
+
+riot.mixin({
+  initState: actions.initState()
+})
+
 // initialize neighborhoods routes
-neighborhoods.init(riot.route, mount, '/neighborhoods/')
+neighborhoods.init(route('/neighborhoods'), mount(), mixin())
 
 // start listining to route changes
 riot.route.start(true)
