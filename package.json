@@ -5,7 +5,6 @@
   "main": "app/index.js",
   "scripts": {
     "prepublish": "run-p build",
-    "prestart": "run-p build",
     "prebuild": "run-p test",
     "build": "run-p build:*",
     "prebuild:client": "run-p clean:client",
@@ -28,7 +27,7 @@
     "test:unit": "nyc mocha --require ./test/entry --recursive ./test/unit",
     "posttest:unit": "nyc --lines 90 --statements 90 report --reporter=lcov --reporter=json-summary",
     "test:lint": "eslint --ext .js src",
-    "watch": "nodemon --watch src --exec 'npm run restart'",
+    "watch": "nodemon --watch src --exec './node_modules/.bin/run-s build restart'",
     "bin:initData": "run-s bin:initTables bin:populateData",
     "bin:initTables": "node app/bin/initTables",
     "bin:populateData": "node app/bin/populateData"
@@ -78,6 +77,7 @@
     "rimraf": "^2.5.4",
     "sinon": "^1.17.6",
     "sinon-chai": "^2.8.0",
+    "string-replace-loader": "^1.0.5",
     "webpack": "^1.13.3"
   },
   "dependencies": {

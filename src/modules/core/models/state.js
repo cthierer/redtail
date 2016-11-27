@@ -69,7 +69,7 @@ class State extends EventEmitter {
      * @type {object}
      * @private
      */
-    this._result = {}
+    this._result = null
 
     // propagate any events fired on filter, sort, and links through this
     // event emitter - consumers don't have to know how this is implemented,
@@ -143,6 +143,10 @@ class State extends EventEmitter {
    * @returns {object} The generated response object.
    */
   toResponse() {
+    if (!this.result) {
+      return null
+    }
+
     return {
       result: this.result,
       total: this.count,

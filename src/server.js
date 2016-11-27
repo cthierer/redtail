@@ -3,10 +3,27 @@
  * @module redtail/server
  */
 
+import url from 'url'
 import express from 'express'
+import config from 'config'
 import models from './modules/models'
+import * as Logger from './modules/logger'
 import * as core from './modules/core'
 import * as neighborhoods from './modules/neighborhoods'
+
+/**
+ * The port that the server should be started on. Loaded from the configuration
+ * file at `redtail.api_base.port`, which can be set either in the
+ * configuration file, or using the `PORT` environment variable.
+ * @type {number}
+ */
+const port = parseInt(config.get('redtail.api_base.port'))
+
+/**
+ * An instance of the logger for server instantiation.
+ * @type {Logger}
+ */
+const logger = Logger.get('server')
 
 /**
  * The initialized and configured Express application.
@@ -15,6 +32,8 @@ import * as neighborhoods from './modules/neighborhoods'
  * @type {object}
  */
 const app = express()
+
+const paths = config.get('redtail.paths')
 
 app.use(
   core.middleware.initContext(),  // initialize req.ctx
@@ -29,7 +48,22 @@ app.use(express.static('dist'))
 app.use('/docs', express.static('doc'))
 app.use('/coverage', express.static('coverage/lcov-report'))
 
-app.use('/neighborhoods', neighborhoods.router(models))
+// serve client configuration
+app.use(paths.config, (req, res, next) => {
+  const redtailConfig = config.get('redtail')
+
+  // explicitly building the config here just to make sure no secrets
+  // are accidentally passed to the client
+  req.ctx.result = {
+    api_base: url.format(redtailConfig.api_base),
+    endpoints: redtailConfig.paths
+  }
+
+  next()
+})
+
+// mount the sub applications
+app.use(paths.neighborhoods, neighborhoods.router(models))
 
 app.use(
   core.middleware.sendResult(),     // send the result to the client
@@ -38,3 +72,4 @@ app.use(
 )
 
 export default app
+export { port, logger }

@@ -2,8 +2,10 @@
  * @module redtail
  */
 
-import server from './server'
+import server, { port, logger } from './server'
 
 export default {
-  server
+  server,
+  port,
+  logger
 }

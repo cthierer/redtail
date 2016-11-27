@@ -5,8 +5,10 @@
  * File will not be run through babel, so it must use standard Node 6 features.
  */
 
-const app = require('./app').default
+const redtail = require('./app')
 
-app.server.listen(process.env.PORT || 3000, () => {
-  console.log('server started') // eslint-disable-line no-console
+const app = redtail.default
+
+app.server.listen(app.port, () => {
+  app.logger.info('server started, listening on port %s', app.port)
 })

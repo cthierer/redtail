@@ -1,4 +1,16 @@
 {
+  "redtail": {
+    "api_base": {
+      "protocol": "http",
+      "hostname": "localhost",
+      "port": "3000",
+      "pathname": ""
+    },
+    "paths": {
+      "config": "/config",
+      "neighborhoods": "/neighborhoods"
+    }
+  },
   "logger": {
     "name": "redtail",
     "level": "info",
