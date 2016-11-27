@@ -8,9 +8,9 @@
   <script type="babel">
     this.filter = opts.filter || {}
 
-    this.submit = () => {
+    this.submit = (e) => {
       if (this.filter && this.filter.addWhere) {
-        this.filter.addWhere({ [opts.name]: this[opts.name].value })
+        this.filter.addWhere({ [opts.name]: e.target.value })
       }
 
       return false
