@@ -17,6 +17,10 @@ modules.neighborhoods.populate(models)
   .then((rodents) => {
     console.log(`loaded ${rodents.length} rodents into the database`)
   })
+  .then(() => modules.establishments.populate(models))
+  .then((establishments) => {
+    console.log(`loaded ${establishments.length} establishments into the database`)
+  })
   .catch((err) => {
     console.error(err)
   })

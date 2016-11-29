@@ -3,8 +3,9 @@
  */
 
 import models from './models'
+import * as establishments from './establishments'
 import * as neighborhoods from './neighborhoods'
 import * as rodents from './rodents'
 import * as transformer from './transformer'
 
-export { models, neighborhoods, rodents, transformer }
+export { models, establishments, neighborhoods, rodents, transformer }

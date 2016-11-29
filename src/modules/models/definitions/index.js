@@ -3,6 +3,7 @@
  */
 
 import agency from './agency'
+import establishment from './establishment'
 import neighborhood from './neighborhood'
 import rodent from './rodent'
 import source from './source'
@@ -15,6 +16,7 @@ import status from './status'
  */
 const initializers = [
   agency,
+  establishment,
   neighborhood,
   rodent,
   source,

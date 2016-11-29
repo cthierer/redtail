@@ -61,6 +61,41 @@
       }
     }
   },
+  "establishments":{
+    "populate": {
+      "remote": {
+        "method": "GET",
+        "url": "https://data.baltimorecity.gov/resource/abuv-d2r2.json",
+        "query": {
+          "$select": "name,zipcode,neighborhood,location_1_location,location_1_city,location_1_state",
+          "$limit": 5000
+        }
+      },
+      "mapping": {
+        "name": {
+          "column": "name"
+        },
+        "zipcode": {
+          "column": "zip"
+        },
+        "neighborhood": {
+          "ref": "belongsTo",
+          "model": "Neighborhood",
+          "column": "name",
+          "create": false
+        },
+        "location_1_location": {
+          "column": "street"
+        },
+        "location_1_city": {
+          "column": "city"
+        },
+        "location_1_state": {
+          "column": "state"
+        }
+      }
+    }
+  },
   "rodents": {
     "populate": {
       "remote": {

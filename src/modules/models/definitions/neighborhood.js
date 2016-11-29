@@ -27,6 +27,10 @@ function initNeighborhood(sequelize, options = {}) {
           onDelete: 'CASCADE',
           onUpdate: 'CASCADE'
         })
+        Neighborhood.hasMany(models.Establishment, {
+          onDelete: 'CASCADE',
+          onUpdate: 'CASCADE'
+        })
       }
     }
   }))
