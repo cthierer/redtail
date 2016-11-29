@@ -11,6 +11,20 @@
       "neighborhoods": "/neighborhoods"
     }
   },
+  "geocoder": {
+    "remote": {
+      "url": "https://geocoding.geo.census.gov/geocoder/locations/address",
+      "query": {
+        "benchmark": "Public_AR_Current"
+      }
+    },
+    "params": {
+      "street": "street",
+      "city": "city",
+      "zip": "zip",
+      "state": "state"
+    }
+  },
   "logger": {
     "name": "redtail",
     "level": "info",
