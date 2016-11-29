@@ -14,6 +14,7 @@ module.exports = {
     path: './dist/scripts',
     filename: 'client.js'
   },
+  target: 'web',
   module: {
     loaders: [
       {
@@ -33,6 +34,7 @@ module.exports = {
       {
         test: /client\.js$/,
         loader: 'string-replace',
+        exclude: /node_modules/,
         query: {
           search: 'API_CONFIG_URL',
           replace: configUrl
@@ -46,5 +48,8 @@ module.exports = {
       $: 'jquery',
       'window.Tether': 'tether'
     })
-  ]
+  ],
+  node: {
+    fs: 'empty'
+  }
 }

@@ -3,7 +3,8 @@
  */
 
 import models from './models'
-import neighborhoods from './neighborhoods'
-import transformer from './transformer'
+import * as neighborhoods from './neighborhoods'
+import * as rodents from './rodents'
+import * as transformer from './transformer'
 
-export { models, neighborhoods, transformer }
+export { models, neighborhoods, rodents, transformer }

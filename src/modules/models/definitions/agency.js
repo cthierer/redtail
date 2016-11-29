@@ -1,29 +1,28 @@
 /**
- * @module redtail/modules/models/definitions/neighborhood
+ * @module redtail/modules/models/definitions/agency
  */
 
 import Sequelize from 'sequelize'
 
 /**
- * Initialize a Sequelize model for a Neighborhood.
+ * Initialize a Sequelize model for an Agency.
  * @param {Sequelize} sequelize Instance of the Sequelize class.
  * @param {Object} options Additional Sequelize model options.
  * @returns {Model} The loaded Sequelize model.
  * @see http://docs.sequelizejs.com/en/v3/docs/models-definition/#configuration
  */
-function initNeighborhood(sequelize, options = {}) {
-  const Neighborhood = sequelize.define('Neighborhood', {
+function initAgency(sequelize, options = {}) {
+  const Agency = sequelize.define('Agency', {
     name: {
       type: Sequelize.STRING,
       allowNull: false,
       unique: true
-    },
-    area: Sequelize.DOUBLE
+    }
   }, Object.assign(options || {}, {
-    tableName: 'neighborhoods',
+    tableName: 'agencies',
     classMethods: {
       associate: (models) => {
-        Neighborhood.hasMany(models.Rodent, {
+        Agency.hasMany(models.Rodent, {
           onDelete: 'CASCADE',
           onUpdate: 'CASCADE'
         })
@@ -31,7 +30,7 @@ function initNeighborhood(sequelize, options = {}) {
     }
   }))
 
-  return Neighborhood
+  return Agency
 }
 
-export default initNeighborhood
+export default initAgency

@@ -11,6 +11,12 @@
  * At a minimum, the mapping value should define a `column` attribute, which
  * defines the destination attribute.
  *
+ * If the mapping defines that a column should reference another model,
+ * then the reference mapping is added to an array of expected reference
+ * types. For example, all belongsTo references will be in the
+ * `result._belongsTo` array. These references must be resolved by the consumer
+ * of this function.
+ *
  * @example
  * const data = { foo: true }
  * const mapping = { foo: { column: 'bar' } }
@@ -27,15 +33,33 @@ async function transform(data, mapping) {
     return {}
   }
 
-  return Object.keys(data).reduce((last, property) => {
+  return Object.keys(mapping).reduce((last, property) => {
     const spec = mapping[property]
     const column = spec ? spec.column : null
+    const value = data[property] || spec.default
 
-    if (!column) {
+    if (!column || !value) {
       return last
     }
 
-    return Object.assign(last, { [column]: data[property] })
+    // TODO rewrite to be more functional style
+    // TODO support other reference types
+    if (spec.ref === 'belongsTo' && spec.model) {
+      const updated = last._belongsTo
+        ? last
+        : Object.assign(last, { _belongsTo: [] })
+
+      updated._belongsTo.push({
+        model: spec.model,
+        create: spec.create === true,
+        column,
+        value
+      })
+
+      return updated
+    }
+
+    return Object.assign(last, { [column]: value })
   }, {})
 }
 

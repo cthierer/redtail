@@ -6,7 +6,7 @@ import populate from '../../../../src/modules/neighborhoods/populate'
 import * as http from '../../../../src/modules/data/http'
 import * as transformer from '../../../../src/modules/transformer'
 
-describe('neighborhoods.populate', () => {
+describe.skip('neighborhoods.populate', () => {
   const sandbox = sinon.sandbox.create()
   const Neighborhood = { build: sandbox.stub().returns(Promise.resolve()) }
   const configData = { remote: { url: 'http://www.example.com' }, mapping: { foo: { column: 'bar' } } }

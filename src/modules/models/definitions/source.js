@@ -1,29 +1,28 @@
 /**
- * @module redtail/modules/models/definitions/neighborhood
+ * @module redtail/modules/models/definitions/source
  */
 
 import Sequelize from 'sequelize'
 
 /**
- * Initialize a Sequelize model for a Neighborhood.
+ * Initialize a Sequelize model for a Source.
  * @param {Sequelize} sequelize Instance of the Sequelize class.
  * @param {Object} options Additional Sequelize model options.
  * @returns {Model} The loaded Sequelize model.
  * @see http://docs.sequelizejs.com/en/v3/docs/models-definition/#configuration
  */
-function initNeighborhood(sequelize, options = {}) {
-  const Neighborhood = sequelize.define('Neighborhood', {
-    name: {
+function initSource(sequelize, options = {}) {
+  const Source = sequelize.define('Source', {
+    title: {
       type: Sequelize.STRING,
       allowNull: false,
       unique: true
-    },
-    area: Sequelize.DOUBLE
+    }
   }, Object.assign(options || {}, {
-    tableName: 'neighborhoods',
+    tableName: 'sources',
     classMethods: {
       associate: (models) => {
-        Neighborhood.hasMany(models.Rodent, {
+        Source.hasMany(models.Rodent, {
           onDelete: 'CASCADE',
           onUpdate: 'CASCADE'
         })
@@ -31,7 +30,7 @@ function initNeighborhood(sequelize, options = {}) {
     }
   }))
 
-  return Neighborhood
+  return Source
 }
 
-export default initNeighborhood
+export default initSource

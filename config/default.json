@@ -46,5 +46,67 @@
         }
       }
     }
+  },
+  "rodents": {
+    "populate": {
+      "remote": {
+        "method": "GET",
+        "url": "https://data.baltimorecity.gov/resource/q7s2-a6pd.json",
+        "query": {
+          "$select": "agency,neighborhood,address,zip,methodreceived,status,outcome,createddate,updateddate",
+          "$where": "codedescription='HCD-Rodents' and lower(outcome) not like '%no active rodent sign%' and lower(outcome) not like '%condition does not exist%' and lower(outcome) not like '%no entry%' and lower(outcome) not like '%not a violation%' and lower(outcome) not like '%invalid address%' and lower(outcome) not like '%no cause for action%'",
+          "$limit": 5000
+        }
+      },
+      "mapping": {
+        "agency": {
+          "ref": "belongsTo",
+          "model": "Agency",
+          "column": "name",
+          "create": true
+        },
+        "neighborhood":{
+          "ref": "belongsTo",
+          "model": "Neighborhood",
+          "column": "name",
+          "create": false
+        },
+        "address": {
+          "column": "street"
+        },
+        "city": {
+          "column": "city",
+          "default": "Baltimore"
+        },
+        "state": {
+          "column": "state",
+          "default": "MD"
+        },
+        "zip": {
+          "column": "zip"
+        },
+        "methodreceived": {
+          "ref": "belongsTo",
+          "model": "Source",
+          "column": "title",
+          "create": true
+        },
+        "status": {
+          "ref": "belongsTo",
+          "model": "Status",
+          "column": "title",
+          "create": true
+        },
+        "outcome": {
+          "column": "notes"
+        },
+        "createddate": {
+          "column": "created_at"
+        },
+        "updateddate": {
+          "column": "updated_at"
+        }
+      }
+    }
   }
 }
