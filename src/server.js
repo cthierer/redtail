@@ -6,7 +6,7 @@
 import url from 'url'
 import express from 'express'
 import config from 'config'
-import models from './modules/models'
+import models, { sequelize } from './modules/models'
 import * as Logger from './modules/logger'
 import * as core from './modules/core'
 import * as neighborhoods from './modules/neighborhoods'
@@ -63,7 +63,7 @@ app.use(paths.config, (req, res, next) => {
 })
 
 // mount the sub applications
-app.use(paths.neighborhoods, neighborhoods.router(models))
+app.use(paths.neighborhoods, neighborhoods.router(models, sequelize))
 
 app.use(
   core.middleware.sendResult(),     // send the result to the client

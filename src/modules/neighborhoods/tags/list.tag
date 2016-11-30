@@ -15,6 +15,8 @@
         <ul class="list-inline">
           <li class="list-inline-item" data-is="filter-sorter" label="Name" name="name" sort={ state.sort }></li>
           <li class="list-inline-item" data-is="filter-sorter" label="Area" name="area" sort={ state.sort }></li>
+          <li class="list-inline-item" data-is="filter-sorter" label="Rodents" name="num_rodents" sort={ state.sort }></li>
+          <li class="list-inline-item" data-is="filter-sorter" label="Establishments" name="num_establishments" sort={ state.sort }></li>
         </ul>
       </div>
     </div>

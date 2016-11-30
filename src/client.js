@@ -7,6 +7,7 @@ import 'bootstrap'
 
 import riot from 'riot/riot'
 import octicons from 'octicons'
+import numeral from 'numeral'
 import * as http from './modules/data/http'
 import * as actions from './modules/core/actions'
 import * as utils from './modules/utils'
@@ -55,7 +56,8 @@ function mixin() {
 // global mixins
 riot.mixin({
   icons: octicons,
-  initState: actions.initState()
+  initState: actions.initState(),
+  number: numeral
 })
 
 // redirect root to neighborhoods

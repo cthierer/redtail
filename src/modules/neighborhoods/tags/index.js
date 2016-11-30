@@ -28,7 +28,7 @@ const tags = {
  * @see http://riotjs.com/api/#mixins
  */
 async function init(route, mount, mixin, config) {
-  const model = new data.RESTModel(config.api_base, config.endpoints.neighborhoods)
+  const model = new data.RESTModel(config.api_base, `${config.endpoints.neighborhoods}/reports`)
 
   route('/', () => {
     mount(tags.list)

@@ -11,7 +11,7 @@ import * as filter from '../filter'
  * @returns {Router}
  * @see http://expressjs.com/en/4x/api.html#express.router
  */
-function init(models) {
+function init(models, sequelize) {
   const router = express.Router()
 
   router.get('/',
@@ -19,6 +19,15 @@ function init(models) {
     filter.middleware.loadSort(['name', 'area']),
     filter.middleware.loadMatch('name', 'search', false),
     middleware.list(models.Neighborhood),
+    middleware.count(models.Neighborhood),
+    filter.middleware.setPagingLinks()
+  )
+
+  router.get('/reports',
+    filter.middleware.loadPaging(),
+    filter.middleware.loadSort(['name', 'area', 'num_rodents', 'num_establishments']),
+    filter.middleware.loadMatch('name', 'search', false),
+    middleware.listReports(models.Neighborhood, sequelize),
     middleware.count(models.Neighborhood),
     filter.middleware.setPagingLinks()
   )
