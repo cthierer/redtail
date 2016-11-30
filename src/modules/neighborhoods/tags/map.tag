@@ -1,23 +1,8 @@
 <neighborhoods-map>
   <div id={ this.mapId } class="map"></div>
   <script type="babel">
-    const rodentActions = this.mixin('rodents').rodents
-    const establishmentActions = this.mixin('establishments').establishments
     const leaflet = this.mixin('leaflet').leaflet
     const mapConfig = this.mixin('mapConfig').mapConfig
-
-    const getState = (option) => {
-      const state = option || this.initState()
-
-      state.sort.set('created_at', 'desc')
-      state.filter.limit = 100
-
-      if (this.neighborhood) {
-        state.filter.addWhere({ neighborhood: this.neighborhood })
-      }
-
-      return state
-    }
 
     const getMarkers = (result, detailsTag, icon) => {
       if (!result) {
@@ -53,46 +38,14 @@
       })
     }
 
-    // neighborhood passed in as an option
+    // options
     this.neighborhood = opts.neighborhood || null
+    this.rodents = opts.rodents || this.initState()
+    this.establishments = opts.establishments || this.initState()
 
     // reference to the leaflet map on this tag
     this.map = null
     this.mapId = `rodent-map-${this.neighborhood}`
-
-    // setup rodents
-    this.rodents = getState(opts.rodents)
-
-    this.rodents.on('core.state.queryUpdated', () => {
-      // re-load data when the query is updated
-      rodentActions.loadAll(this.rodents)
-    })
-
-    this.rodents.on('core.state.updated', (updated) => {
-      // trigger this tag to re-render when the state has been updated
-      this.update({ rodents: updated })
-    })
-
-    // setup establishments
-    this.establishments = getState(opts.establishments)
-
-    this.establishments.on('core.state.queryUpdated', () => {
-      // re-load data when the query is updated
-      establishmentActions.loadAll(this.rodents)
-    })
-
-    this.establishments.on('core.state.updated', (updated) => {
-      // trigger this tag to re-render when the state has been updated
-      this.update({ establishments: updated })
-    })
-
-    // tag lifecycle hooks
-
-    this.on('before-mount', () => {
-      // pre-load data before the tag is mounted for the first time
-      rodentActions.loadAll(this.rodents)
-      establishmentActions.loadAll(this.establishments)
-    })
 
     this.on('mount', () => {
       // initialize the map

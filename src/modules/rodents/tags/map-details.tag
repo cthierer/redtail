@@ -8,9 +8,9 @@
     </span>
   </div>
   <div class="data-field">
-    <span class="data-label">Notes</span>
-    <span class="data-value notes">
-      { location.notes }
+    <span class="data-label">Status</span>
+    <span class="data-value status">
+      { location.status.title }
     </span>
   </div>
   <div class="data-field">

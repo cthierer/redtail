@@ -5,6 +5,7 @@
 import express from 'express'
 import * as core from '../core'
 import * as filter from '../filter'
+import list from './middleware/list'
 
 /**
  * @param {object} models
@@ -18,7 +19,7 @@ function init(models) {
     filter.middleware.loadPaging(),
     filter.middleware.loadSort(['created_at']),
     filter.middleware.loadEqual('neighborhood_id', 'neighborhood'),
-    core.middleware.list(models.Rodent),
+    list(models.Rodent, models.Status, models.Source, models.Agency),
     core.middleware.count(models.Rodent),
     filter.middleware.setPagingLinks()
   )

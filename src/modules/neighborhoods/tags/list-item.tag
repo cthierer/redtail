@@ -29,10 +29,10 @@
     </div>
     <div class="card-block" show={ showDetails }>
       <h5>Details</h5>
-      <div id={ mapMountId }></div>
+      <div id={ detailsMountId }></div>
     </div>
     <div class="card-footer">
-      <button class="btn" onclick={ showMap }>
+      <button class="btn" onclick={ toggleDetails }>
         Details
         <core-icon name="triangle-up" show={ showDetails }></core-icon>
         <core-icon name="triangle-down" hide={ showDetails }></core-icon>
@@ -41,13 +41,13 @@
   </div>
   <script type="babel">
     this.neighborhood = opts.neighborhood || {}
-    this.mapMountId = `map-${this.neighborhood.id}`
+    this.detailsMountId = `neighborhood-details-${this.neighborhood.id}`
     this.showDetails = null
 
-    this.showMap = () => {
+    this.toggleDetails = () => {
       if (this.showDetails === null) {
-        riot.mount(`#${this.mapMountId}`, 'neighborhoods-map', {
-          neighborhood: this.neighborhood.id
+        riot.mount(`#${this.detailsMountId}`, 'neighborhoods-list-details', {
+          neighborhood: this.neighborhood
         })
 
         this.showDetails = true
