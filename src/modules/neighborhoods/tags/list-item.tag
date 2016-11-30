@@ -46,7 +46,7 @@
 
     this.showMap = () => {
       if (this.showDetails === null) {
-        riot.mount(`#${this.mapMountId}`, 'rodents-map', {
+        riot.mount(`#${this.mapMountId}`, 'neighborhoods-map', {
           neighborhood: this.neighborhood.id
         })
 

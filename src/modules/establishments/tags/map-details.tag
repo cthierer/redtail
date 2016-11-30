@@ -1,22 +1,10 @@
-<rodents-map-details>
-  <h6>Rodent reported</h6>
+<establishments-map-details>
+  <h6>{ location.name }</h6>
   <div class="data-field">
     <span class="data-label">Address</span>
     <span class="data-value address">
       { location.street }<br>
       { location.city }, { location.state } { location.zip }
-    </span>
-  </div>
-  <div class="data-field">
-    <span class="data-label">Notes</span>
-    <span class="data-value notes">
-      { location.notes }
-    </span>
-  </div>
-  <div class="data-field">
-    <span class="data-label">Reported</span>
-    <span class="data-value created_at">
-      { moment(location.created_at).calendar() }
     </span>
   </div>
   <script type="babel">
@@ -44,4 +32,4 @@
       content: ':'
     }
   </style>
-</rodents-map-details>
+</establishments-map-details>

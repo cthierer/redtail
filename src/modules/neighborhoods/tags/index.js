@@ -37,6 +37,10 @@ async function init(route, mount, mixin, config) {
   mixin('neighborhoods', {
     loadAll: actions.loadAll(model)
   })
+
+  mixin('mapConfig', {
+    mapConfig: config.map
+  })
 }
 
 export { init, tags }

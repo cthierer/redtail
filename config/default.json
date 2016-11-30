@@ -9,7 +9,16 @@
     "paths": {
       "config": "/config",
       "neighborhoods": "/neighborhoods",
-      "rodents": "/rodents"
+      "rodents": "/rodents",
+      "establishments": "/establishments"
+    },
+    "map": {
+      "tile_url": "https://api.mapbox.com/styles/v1/mapbox/streets-v10/tiles/256/{z}/{x}/{y}?access_token={accessToken}",
+      "options": {
+        "accessToken": "pk.eyJ1IjoiY3RoaWVyZXIiLCJhIjoiY2l3NGdoaTZkMDBrbzJ0cGd2eGU2aGs5MiJ9.aHADhfD8LYo7TvpGbWfirA"
+      },
+      "initial_view": [39.299236, -76.609383],
+      "initial_zoom": 13
     }
   },
   "geocoder": {

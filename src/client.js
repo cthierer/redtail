@@ -15,6 +15,7 @@ import * as actions from './modules/core/actions'
 import * as utils from './modules/utils'
 import * as neighborhoods from './modules/neighborhoods/tags'
 import * as rodents from './modules/rodents/tags'
+import * as establishments from './modules/establishments/tags'
 
 /* eslint-env browser */
 
@@ -78,10 +79,9 @@ route('')('', () => riot.route('neighborhoods/'))
 http.getDataAsJSON({ url: 'API_CONFIG_URL' })
   .then(response => response.result)
   .then(config => Promise.all([
-    // neighborhoods
     neighborhoods.init(route('neighborhoods'), mount(), mixin(), config),
-    // rodents
-    rodents.init(route('rodents'), mount(), mixin(), config)
+    rodents.init(route('rodents'), mount(), mixin(), config),
+    establishments.init(route('establishments'), mount(), mixin(), config)
   ]))
   .then(() => {
     // start listining to route changes

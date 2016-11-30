@@ -1,5 +1,5 @@
 /**
- * @module redtail/modules/rodents/router
+ * @module redtail/modules/establishments/router
  */
 
 import express from 'express'
@@ -18,8 +18,8 @@ function init(models) {
     filter.middleware.loadPaging(),
     filter.middleware.loadSort(['created_at']),
     filter.middleware.loadEqual('neighborhood_id', 'neighborhood'),
-    core.middleware.list(models.Rodent),
-    core.middleware.count(models.Rodent),
+    core.middleware.list(models.Establishment),
+    core.middleware.count(models.Establishment),
     filter.middleware.setPagingLinks()
   )
 

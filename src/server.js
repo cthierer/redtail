@@ -11,6 +11,7 @@ import * as Logger from './modules/logger'
 import * as core from './modules/core'
 import * as neighborhoods from './modules/neighborhoods'
 import * as rodents from './modules/rodents'
+import * as establishments from './modules/establishments'
 
 /**
  * The port that the server should be started on. Loaded from the configuration
@@ -57,7 +58,8 @@ app.use(paths.config, (req, res, next) => {
   // are accidentally passed to the client
   req.ctx.result = {
     api_base: url.format(redtailConfig.api_base),
-    endpoints: redtailConfig.paths
+    endpoints: redtailConfig.paths,
+    map: redtailConfig.map
   }
 
   next()
@@ -66,6 +68,7 @@ app.use(paths.config, (req, res, next) => {
 // mount the sub applications
 app.use(paths.neighborhoods, neighborhoods.router(models, sequelize))
 app.use(paths.rodents, rodents.router(models, sequelize))
+app.use(paths.establishments, establishments.router(models, sequelize))
 
 app.use(
   core.middleware.sendResult(),     // send the result to the client
