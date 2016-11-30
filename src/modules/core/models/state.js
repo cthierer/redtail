@@ -162,6 +162,10 @@ class State extends EventEmitter {
     this.emit('core.state.updated', this)
   }
 
+  refresh() {
+    this.emit('core.state.refresh', this)
+  }
+
   queryUpdated() {
     this.emit('core.state.queryUpdated', this)
   }

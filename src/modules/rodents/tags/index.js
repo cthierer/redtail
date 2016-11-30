@@ -52,6 +52,7 @@ async function init(route, mount, mixin, config) {
     rodents: {
       loadAll: actions.loadAll(rodentModel),
       save: actions.saveData(rodentModel),
+      remove: actions.remove(rodentModel),
       loadNeighborhoods: actions.loadAll(neighborhoodsModel, { order: ['name', 'asc'], limit: 500 }),
       loadAgencies: actions.loadAll(agenciesModel, { order: ['name', 'asc'] }),
       loadSources: actions.loadAll(sourcesModel, { order: ['title', 'asc'] }),

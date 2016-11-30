@@ -24,9 +24,9 @@ function listReports(model, sequelize) {
         count(distinct \`Rodent\`.\`id\`) as \`num_rodents\`,
         count(distinct \`Establishment\`.\`id\`) as \`num_establishments\`
       from \`neighborhoods\` as \`Neighborhood\`
-      inner join \`rodents\` as \`Rodent\`
+      left join \`rodents\` as \`Rodent\`
         on \`Neighborhood\`.\`id\` = \`Rodent\`.\`neighborhood_id\`
-      inner join \`establishments\` as \`Establishment\`
+      left join \`establishments\` as \`Establishment\`
         on \`Neighborhood\`.\`id\` = \`Establishment\`.\`neighborhood_id\`
       where \`Neighborhood\`.\`name\` like :name
       group by \`Neighborhood\`.\`id\`

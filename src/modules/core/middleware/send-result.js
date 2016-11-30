@@ -20,7 +20,7 @@ function sendResult() {
       const status = req.ctx.status ? req.ctx.status : 200
       res.status(status).send(body)
     } else {
-      res.status(req.ctx.status || 404)
+      res.status(req.ctx.status || 404).end()
     }
 
     next()

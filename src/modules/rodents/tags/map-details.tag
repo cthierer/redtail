@@ -14,6 +14,7 @@
     </span>
   </div>
   <rodents-edit-button sm="true" id={ location.id }>Edit</rodents-edit-button>
+  <rodents-remove-button sm="true" id={ location.id }>Delete</rodents-remove-button>
   <script type="babel">
     this.location = opts.location || {}
   </script>

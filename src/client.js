@@ -22,6 +22,8 @@ import * as establishments from './modules/establishments/tags'
 // load globals on browser window, if this is a browser
 window.riot = riot
 
+const globalState = actions.initState()()
+
 /**
  * Mount a tag as the main application tag.
  * @returns {function} Returns a mount function that when called with a tag
@@ -29,7 +31,9 @@ window.riot = riot
  */
 function mount() {
   return (tag, opts = {}) => {
-    riot.mount('#redtailApp', tag, opts)
+    riot.mount('#redtailApp', tag, Object.assign({
+      state: globalState
+    }, opts))
   }
 }
 
@@ -62,7 +66,8 @@ riot.mixin({
   icons: octicons,
   initState: actions.initState(),
   number: numeral,
-  moment
+  moment,
+  refresh: () => globalState.refresh()
 })
 
 // namespaced mixins

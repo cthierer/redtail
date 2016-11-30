@@ -40,6 +40,10 @@
     // state can be passed in as an option, or initialized here
     this.state = opts.state || this.initState()
 
+    this.state.on('core.state.refresh', () => {
+      actions.loadAll(this.state)
+    })
+
     this.state.on('core.state.queryUpdated', () => {
       // re-load data when the query is updated
       actions.loadAll(this.state)

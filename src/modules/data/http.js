@@ -51,5 +51,9 @@ async function postDataAsJSON(body, options) {
   return request(Object.assign({}, options, { body }), 'POST')
 }
 
+async function deleteData(options) {
+  return request(options, 'DELETE')
+}
+
 export default popsicle
-export { getDataAsJSON, putDataAsJSON, postDataAsJSON }
+export { getDataAsJSON, putDataAsJSON, postDataAsJSON, deleteData }

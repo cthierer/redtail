@@ -36,6 +36,10 @@ function init(models) {
     core.middleware.update(models.Rodent)
   )
 
+  router.delete('/:id',
+    core.middleware.remove(models.Rodent)
+  )
+
   return router
 }
 

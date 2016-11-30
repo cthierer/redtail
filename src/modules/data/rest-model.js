@@ -99,6 +99,11 @@ class RESTModel {
 
     return http.postDataAsJSON(data, { url })
   }
+
+  remove(id) {
+    const url = utils.urls.join(this.url, id)
+    return http.deleteData({ url })
+  }
 }
 
 export default RESTModel

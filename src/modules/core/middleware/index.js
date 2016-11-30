@@ -13,6 +13,7 @@ import handleError from './handle-error'
 import recordResponse from './record-response'
 import sendResult from './send-result'
 import update from './update'
+import remove from './remove'
 
 export {
   count,
@@ -25,5 +26,6 @@ export {
   handleError,
   recordResponse,
   sendResult,
-  update
+  update,
+  remove
 }
