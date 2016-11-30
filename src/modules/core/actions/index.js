@@ -3,6 +3,6 @@
  */
 
 import initState from './init-state'
+import loadAll from './load-all'
 
-export default { initState }
-export { initState }
+export { initState, loadAll }

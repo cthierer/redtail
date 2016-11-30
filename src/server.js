@@ -10,6 +10,7 @@ import models, { sequelize } from './modules/models'
 import * as Logger from './modules/logger'
 import * as core from './modules/core'
 import * as neighborhoods from './modules/neighborhoods'
+import * as rodents from './modules/rodents'
 
 /**
  * The port that the server should be started on. Loaded from the configuration
@@ -64,6 +65,7 @@ app.use(paths.config, (req, res, next) => {
 
 // mount the sub applications
 app.use(paths.neighborhoods, neighborhoods.router(models, sequelize))
+app.use(paths.rodents, rodents.router(models, sequelize))
 
 app.use(
   core.middleware.sendResult(),     // send the result to the client

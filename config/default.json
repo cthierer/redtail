@@ -8,7 +8,8 @@
     },
     "paths": {
       "config": "/config",
-      "neighborhoods": "/neighborhoods"
+      "neighborhoods": "/neighborhoods",
+      "rodents": "/rodents"
     }
   },
   "geocoder": {

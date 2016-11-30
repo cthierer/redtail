@@ -8,10 +8,13 @@ import 'bootstrap'
 import riot from 'riot/riot'
 import octicons from 'octicons'
 import numeral from 'numeral'
+import leaflet from 'leaflet/dist/leaflet'
+import moment from 'moment'
 import * as http from './modules/data/http'
 import * as actions from './modules/core/actions'
 import * as utils from './modules/utils'
 import * as neighborhoods from './modules/neighborhoods/tags'
+import * as rodents from './modules/rodents/tags'
 
 /* eslint-env browser */
 
@@ -57,8 +60,12 @@ function mixin() {
 riot.mixin({
   icons: octicons,
   initState: actions.initState(),
-  number: numeral
+  number: numeral,
+  moment
 })
+
+// namespaced mixins
+riot.mixin('leaflet', { leaflet })
 
 // redirect root to neighborhoods
 route('')('', () => riot.route('neighborhoods/'))
@@ -71,8 +78,10 @@ route('')('', () => riot.route('neighborhoods/'))
 http.getDataAsJSON({ url: 'API_CONFIG_URL' })
   .then(response => response.result)
   .then(config => Promise.all([
-    // initialize neighborhoods routes
-    neighborhoods.init(route('neighborhoods'), mount(), mixin(), config)
+    // neighborhoods
+    neighborhoods.init(route('neighborhoods'), mount(), mixin(), config),
+    // rodents
+    rodents.init(route('rodents'), mount(), mixin(), config)
   ]))
   .then(() => {
     // start listining to route changes

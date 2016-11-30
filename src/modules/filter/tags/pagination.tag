@@ -21,6 +21,7 @@
     this.navigate = (to) => {
       if (this.links.navigate) {
         this.links.navigate(to)
+        window.scrollTo(0,0)
       }
     }
 

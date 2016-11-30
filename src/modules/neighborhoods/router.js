@@ -4,6 +4,7 @@
 
 import express from 'express'
 import * as middleware from './middleware'
+import * as core from '../core'
 import * as filter from '../filter'
 
 /**
@@ -18,8 +19,8 @@ function init(models, sequelize) {
     filter.middleware.loadPaging(),
     filter.middleware.loadSort(['name', 'area']),
     filter.middleware.loadMatch('name', 'search', false),
-    middleware.list(models.Neighborhood),
-    middleware.count(models.Neighborhood),
+    core.middleware.list(models.Neighborhood),
+    core.middleware.count(models.Neighborhood),
     filter.middleware.setPagingLinks()
   )
 
@@ -28,7 +29,7 @@ function init(models, sequelize) {
     filter.middleware.loadSort(['name', 'area', 'num_rodents', 'num_establishments']),
     filter.middleware.loadMatch('name', 'search', false),
     middleware.listReports(models.Neighborhood, sequelize),
-    middleware.count(models.Neighborhood),
+    core.middleware.count(models.Neighborhood),
     filter.middleware.setPagingLinks()
   )
 

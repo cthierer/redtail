@@ -1,5 +1,5 @@
 /**
- * @module redtail/modules/neighborhoods/tags
+ * @module redtail/modules/rodents/tags
  */
 
 import * as actions from '../../core/actions'
@@ -10,8 +10,8 @@ import * as data from '../../data'
  * @type {object}
  */
 const tags = {
-  listItem: 'neighborhoods-list-item',
-  list: 'neighborhoods-list'
+  map: 'rodents-map',
+  mapDetails: 'rodents-map-details'
 }
 
 /**
@@ -28,13 +28,9 @@ const tags = {
  * @see http://riotjs.com/api/#mixins
  */
 async function init(route, mount, mixin, config) {
-  const model = new data.RESTModel(config.api_base, `${config.endpoints.neighborhoods}/reports`)
+  const model = new data.RESTModel(config.api_base, `${config.endpoints.rodents}`)
 
-  route('/', () => {
-    mount(tags.list)
-  })
-
-  mixin('neighborhoods', {
+  mixin('rodents', {
     loadAll: actions.loadAll(model)
   })
 }

@@ -1,5 +1,5 @@
 /**
- * @module redtail/modules/neighborhoods/middleware/list
+ * @module redtail/modules/core/middleware/list
  */
 
 /**

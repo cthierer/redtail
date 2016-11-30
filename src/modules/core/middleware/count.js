@@ -1,5 +1,5 @@
 /**
- * @module redtail/modules/neighborhoods/middleware/count
+ * @module redtail/modules/core/middleware/count
  */
 
 /**

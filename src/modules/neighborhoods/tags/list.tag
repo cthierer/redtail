@@ -49,10 +49,6 @@
       actions.loadAll(this.state)
     })
 
-    this.on('updated', () => {
-      window.scrollTo(0,0)
-    })
-
     // execute the filter - doesn't do anything because the individual filter
     // tags handle updating the state and updating
     // used to prevent the default form action when the user presses "enter"

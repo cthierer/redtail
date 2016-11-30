@@ -2,7 +2,7 @@
  * @module redtail/modules/rodents
  */
 
+import router from './router'
 import populate from './populate'
 
-export default { populate }
-export { populate }
+export { router, populate }
