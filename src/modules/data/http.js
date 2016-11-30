@@ -10,20 +10,17 @@ import * as popsicle from 'popsicle'
  */
 const CONTENT_TYPE_JSON = 'application/json'
 
-/**
- * Retrieve JSON data from a remote HTTP service. Handles requesting JSON
- * data, and parsing the result into a Javascript object.
- * @param {Object} options The request options for making the HTTP request.
- *  Should match the format expected by the popsicle module.
- * @returns {any} The result of the HTTP call.
- * @see https://github.com/blakeembrey/popsicle#handling-requests
- */
-async function getDataAsJSON(options) {
+async function request(options, method = 'GET') {
   if (!options.url) {
     throw new Error('Missing required option: `url`')
   }
 
-  return popsicle.request(Object.assign({}, options, { headers: { accept: CONTENT_TYPE_JSON } }))
+  return popsicle.request(Object.assign({}, options, {
+    method,
+    headers: {
+      accept: CONTENT_TYPE_JSON
+    }
+  }))
     .use(popsicle.plugins.parse(['json']))
     .then((response) => {
       if (response.status >= 400) {
@@ -34,5 +31,25 @@ async function getDataAsJSON(options) {
     })
 }
 
+/**
+ * Retrieve JSON data from a remote HTTP service. Handles requesting JSON
+ * data, and parsing the result into a Javascript object.
+ * @param {Object} options The request options for making the HTTP request.
+ *  Should match the format expected by the popsicle module.
+ * @returns {any} The result of the HTTP call.
+ * @see https://github.com/blakeembrey/popsicle#handling-requests
+ */
+async function getDataAsJSON(options) {
+  return request(options)
+}
+
+async function putDataAsJSON(body, options) {
+  return request(Object.assign({}, options, { body }), 'PUT')
+}
+
+async function postDataAsJSON(body, options) {
+  return request(Object.assign({}, options, { body }), 'POST')
+}
+
 export default popsicle
-export { getDataAsJSON }
+export { getDataAsJSON, putDataAsJSON, postDataAsJSON }

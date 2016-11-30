@@ -8,17 +8,12 @@
     </span>
   </div>
   <div class="data-field">
-    <span class="data-label">Status</span>
-    <span class="data-value status">
-      { location.status.title }
-    </span>
-  </div>
-  <div class="data-field">
     <span class="data-label">Reported</span>
     <span class="data-value created_at">
       { moment(location.created_at).calendar() }
     </span>
   </div>
+  <rodents-edit-button sm="true" id={ location.id }>Edit</rodents-edit-button>
   <script type="babel">
     this.location = opts.location || {}
   </script>

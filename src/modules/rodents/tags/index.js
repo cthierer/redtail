@@ -2,6 +2,7 @@
  * @module redtail/modules/rodents/tags
  */
 
+import serialize from 'form-serialize'
 import * as actions from '../../core/actions'
 import * as data from '../../data'
 
@@ -10,6 +11,8 @@ import * as data from '../../data'
  * @type {object}
  */
 const tags = {
+  createForm: 'rodents-form',
+  editForm: 'rodents-form',
   mapDetails: 'rodents-map-details'
 }
 
@@ -27,11 +30,34 @@ const tags = {
  * @see http://riotjs.com/api/#mixins
  */
 async function init(route, mount, mixin, config) {
-  const model = new data.RESTModel(config.api_base, `${config.endpoints.rodents}`)
+  const rodentModel = new data.RESTModel(config.api_base, config.endpoints.rodents)
+  const geocodes = new data.RESTModel(config.api_base, config.endpoints.geocodes)
+  const neighborhoodsModel = new data.RESTModel(config.api_base, config.endpoints.neighborhoods)
+  const agenciesModel = new data.RESTModel(config.api_base, config.endpoints.agencies)
+  const sourcesModel = new data.RESTModel(config.api_base, config.endpoints.sources)
+  const statusesModel = new data.RESTModel(config.api_base, config.endpoints.statuses)
+
+  route('/create', () => {
+    mount(tags.createForm)
+  })
+
+  route('/edit/*', (id) => {
+    rodentModel.findById(id)
+      .then((rodent) => {
+        mount(tags.editForm, { rodent: rodent.result })
+      })
+  })
 
   mixin('rodents', {
     rodents: {
-      loadAll: actions.loadAll(model)
+      loadAll: actions.loadAll(rodentModel),
+      save: actions.saveData(rodentModel),
+      loadNeighborhoods: actions.loadAll(neighborhoodsModel, { order: ['name', 'asc'], limit: 500 }),
+      loadAgencies: actions.loadAll(agenciesModel, { order: ['name', 'asc'] }),
+      loadSources: actions.loadAll(sourcesModel, { order: ['title', 'asc'] }),
+      loadStatuses: actions.loadAll(statusesModel, { order: ['title', 'asc'] }),
+      geocode: address => geocodes.findAll({ where: address }).then(response => response.result),
+      serialize
     }
   })
 }

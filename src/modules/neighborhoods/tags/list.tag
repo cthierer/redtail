@@ -21,6 +21,12 @@
       </div>
     </div>
     <div class="col-sm-8 pull-sm-4">
+      <div class="toolbar">
+        <button class="btn" onclick={ reportRodent }>
+          <core-icon name="diff-added"></core-icon>
+          Report rodent
+        </button>
+      </div>
       <div class="results">
         <h3 class="sr-only">Results</h3>
         <neighborhoods-list-item each={ state.result } neighborhood={ this }></neighborhoods-list-item>
@@ -53,5 +59,10 @@
     // tags handle updating the state and updating
     // used to prevent the default form action when the user presses "enter"
     this.filter = () => false
+
+    this.reportRodent = () => {
+      riot.route('rodents/create')
+      return false
+    }
   </script>
 </neighborhoods-list>

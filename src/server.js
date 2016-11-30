@@ -6,12 +6,17 @@
 import url from 'url'
 import express from 'express'
 import config from 'config'
+import bodyParser from 'body-parser'
 import models, { sequelize } from './modules/models'
+import geocoder from './modules/geocoder/router'
 import * as Logger from './modules/logger'
 import * as core from './modules/core'
 import * as neighborhoods from './modules/neighborhoods'
 import * as rodents from './modules/rodents'
 import * as establishments from './modules/establishments'
+import * as agencies from './modules/agencies'
+import * as sources from './modules/sources'
+import * as statuses from './modules/statuses'
 
 /**
  * The port that the server should be started on. Loaded from the configuration
@@ -37,6 +42,8 @@ const app = express()
 
 const paths = config.get('redtail.paths')
 
+app.use(bodyParser.json())
+
 app.use(
   core.middleware.initContext(),  // initialize req.ctx
   core.middleware.generateId(),   // initilaize req.ctx.requestId
@@ -53,22 +60,30 @@ app.use('/coverage', express.static('coverage/lcov-report'))
 // serve client configuration
 app.use(paths.config, (req, res, next) => {
   const redtailConfig = config.get('redtail')
+  const geocoderConfig = config.get('geocoder')
 
   // explicitly building the config here just to make sure no secrets
   // are accidentally passed to the client
   req.ctx.result = {
     api_base: url.format(redtailConfig.api_base),
     endpoints: redtailConfig.paths,
-    map: redtailConfig.map
+    map: redtailConfig.map,
+    geocoder: geocoderConfig
   }
 
   next()
 })
 
+// proxy geocoding
+app.use(paths.geocodes, geocoder())
+
 // mount the sub applications
 app.use(paths.neighborhoods, neighborhoods.router(models, sequelize))
 app.use(paths.rodents, rodents.router(models, sequelize))
 app.use(paths.establishments, establishments.router(models, sequelize))
+app.use(paths.agencies, agencies.router(models, sequelize))
+app.use(paths.sources, sources.router(models, sequelize))
+app.use(paths.statuses, statuses.router(models, sequelize))
 
 app.use(
   core.middleware.sendResult(),     // send the result to the client

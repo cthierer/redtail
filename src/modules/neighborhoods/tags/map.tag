@@ -1,8 +1,7 @@
 <neighborhoods-map>
-  <div id={ this.mapId } class="map"></div>
+  <core-map markers={ markers }></core-map>
   <script type="babel">
     const leaflet = this.mixin('leaflet').leaflet
-    const mapConfig = this.mixin('mapConfig').mapConfig
 
     const getMarkers = (result, detailsTag, icon) => {
       if (!result) {
@@ -26,13 +25,9 @@
         marker.bindPopup(`<div id="${popupId}"></div>`)
 
         marker.on('popupopen', (e) => {
-          // mount the popup, center the map on it
+          // mount the popup
           riot.mount(`#${popupId}`, detailsTag, { location })
-          this.map.panTo(e.popup.getLatLng())
         })
-
-        // load the marker
-        marker.addTo(this.map)
 
         return marker
       })
@@ -42,30 +37,13 @@
     this.neighborhood = opts.neighborhood || null
     this.rodents = opts.rodents || this.initState()
     this.establishments = opts.establishments || this.initState()
+    this.markers = []
 
-    // reference to the leaflet map on this tag
-    this.map = null
-    this.mapId = `rodent-map-${this.neighborhood}`
-
-    this.on('mount', () => {
-      // initialize the map
-      this.map = leaflet.map(this.mapId).setView(mapConfig.initial_view, mapConfig.initial_zoom)
-      leaflet.tileLayer(mapConfig.tile_url, mapConfig.options).addTo(this.map)
-    })
-
-    this.on('updated', () => {
-      // when the data is updated, also update the map
-      if (this.map) {
-        // map must be initailized (only done after mounting)
-        // resize based on visibility
-        this.map.invalidateSize()
-
-        if (this.rodents.result || this.establishments.result) {
-          const rodents = getMarkers(this.rodents.result, 'rodents-map-details', 'bug')
-          const establishments = getMarkers(this.establishments.result, 'establishments-map-details', 'radio-tower')
-          const group = new leaflet.featureGroup([].concat(rodents, establishments))
-          this.map.fitBounds(group.getBounds())
-        }
+    this.on('update', () => {
+      if (this.rodents.result || this.establishments.result) {
+        const rodents = getMarkers(this.rodents.result, 'rodents-map-details', 'bug')
+        const establishments = getMarkers(this.establishments.result, 'establishments-map-details', 'radio-tower')
+        this.markers = [].concat(rodents, establishments)
       }
     })
   </script>

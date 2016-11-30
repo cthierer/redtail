@@ -10,8 +10,8 @@
  *  The function returns a Promise that resolves when the state has finished
  *  updating.
  */
-function loadAll(model) {
-  return state => model.findAll(state.getQueryOptions())
+function loadAll(model, defaultOptions = {}) {
+  return state => model.findAll(Object.assign({}, defaultOptions, state.getQueryOptions()))
     .then((response) => {
       state.loadResponse(response)
       return state

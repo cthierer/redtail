@@ -31,7 +31,7 @@ async function populateEstablishments(models) {
   return Promise.map(instances, async (instance) => {
     // manually geocode the retrieved data, and update the data in the database
     try {
-      const geolocation = await geocode(instance.get())
+      const geolocation = await geocode(instance.get(), Config.get('geocoder'))
 
       if (geolocation && geolocation.latitude && geolocation.longitude) {
         return instance.update(geolocation, { silent: true })

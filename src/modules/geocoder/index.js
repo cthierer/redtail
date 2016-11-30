@@ -2,7 +2,6 @@
  * @module redtail/modules/geocoder
  */
 
-import Config from 'config'
 import { getDataAsJSON } from '../data/http'
 
 /**
@@ -14,8 +13,7 @@ import { getDataAsJSON } from '../data/http'
  *  longitude attribute.
  * @see https://geocoding.geo.census.gov/geocoder/Geocoding_Services_API.pdf
  */
-async function geocode(address) {
-  const config = Config.get('geocoder')
+async function geocode(address, config) {
   // build a query, mapping the address fields to the query parameter
   // using the config.params mapping object
   const query = Object.keys(config.params).reduce((options, field) => {

@@ -10,7 +10,11 @@
       "config": "/config",
       "neighborhoods": "/neighborhoods",
       "rodents": "/rodents",
-      "establishments": "/establishments"
+      "establishments": "/establishments",
+      "agencies": "/agencies",
+      "sources": "/sources",
+      "statuses": "/statuses",
+      "geocodes": "/geocodes"
     },
     "map": {
       "tile_url": "https://api.mapbox.com/styles/v1/mapbox/streets-v10/tiles/256/{z}/{x}/{y}?access_token={accessToken}",

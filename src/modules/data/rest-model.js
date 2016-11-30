@@ -84,6 +84,21 @@ class RESTModel {
 
     return http.getDataAsJSON({ url, query })
   }
+
+  findById(id) {
+    const url = utils.urls.join(this.url, id)
+    return http.getDataAsJSON({ url })
+  }
+
+  save(data) {
+    const url = this.url
+
+    if (data.id) {
+      return http.putDataAsJSON(data, { url: utils.urls.join(url, data.id) })
+    }
+
+    return http.postDataAsJSON(data, { url })
+  }
 }
 
 export default RESTModel

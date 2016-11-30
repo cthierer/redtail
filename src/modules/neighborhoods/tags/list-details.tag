@@ -11,6 +11,7 @@
       <div class="data-value">
         { recentRodent.status.title } &dash; { recentRodent.notes }
       </div>
+      <rodents-edit-button id={ location.id }>Edit</rodents-edit-button>
     </div>
   </div>
   <div class="data-map">
