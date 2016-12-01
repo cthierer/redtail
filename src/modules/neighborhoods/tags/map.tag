@@ -34,13 +34,15 @@
     }
 
     // options
-    this.neighborhood = opts.neighborhood || null
-    this.rodents = opts.rodents || this.initState()
-    this.establishments = opts.establishments || this.initState()
+    this.rodents = opts.rodents
+    this.establishments = opts.establishments
     this.markers = []
 
     this.on('update', () => {
-      if (this.rodents.result || this.establishments.result) {
+      this.rodents = opts.rodents
+      this.establishments = opts.establishments
+
+      if (this.rodents || this.establishments) {
         const rodents = getMarkers(this.rodents.result, 'rodents-map-details', 'bug')
         const establishments = getMarkers(this.establishments.result, 'establishments-map-details', 'radio-tower')
         this.markers = [].concat(rodents, establishments)

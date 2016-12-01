@@ -203,7 +203,7 @@
     }
 
     this.save = (e) => {
-      const data = helpers.serialize(e.target, { hash: true, disabled: true, empty: true })
+      const data = helpers.serialize(e.target, { hash: true, disabled: true })
       const saveState = this.initState()
 
       saveState.data = data

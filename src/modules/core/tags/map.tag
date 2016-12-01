@@ -1,17 +1,18 @@
 <core-map>
-  <div id={ this.mapId } class="map"></div>
+  <div id={ mapId } class="map"></div>
   <script type="babel">
     const leaflet = this.mixin('leaflet').leaflet
     const mapConfig = this.mixin('mapConfig').mapConfig
 
     // reference to the leaflet map on this tag
     this.map = null
-    this.mapId = `map-${Math.trunc(101 * Math.random())}`
+    this.mapId = `map-${this.uuid()}`
 
-    this.on('mount', () => {
-      // initialize the map
-      this.map = leaflet.map(this.mapId).setView(mapConfig.initial_view, mapConfig.initial_zoom)
-      leaflet.tileLayer(mapConfig.tile_url, mapConfig.options).addTo(this.map)
+    this.one('updated', () => {
+      if (!this.map) {
+        this.map = leaflet.map(this.mapId).setView(mapConfig.initial_view, mapConfig.initial_zoom)
+        leaflet.tileLayer(mapConfig.tile_url, mapConfig.options).addTo(this.map)
+      }
     })
 
     this.on('updated', () => {

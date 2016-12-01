@@ -29,7 +29,9 @@
       </div>
       <div class="results">
         <h3 class="sr-only">Results</h3>
-        <neighborhoods-list-item each={ state.result } neighborhood={ this }></neighborhoods-list-item>
+        <div each={ state.result }>
+          <neighborhoods-list-item neighborhood={ this } state={ parent.state }></neighborhoods-list-item>
+        </div>
       </div>
       <filter-pagination links={ state.links }></filter-pagination>
     </div>

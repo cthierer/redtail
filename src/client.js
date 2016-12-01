@@ -10,6 +10,7 @@ import octicons from 'octicons'
 import numeral from 'numeral'
 import leaflet from 'leaflet/dist/leaflet'
 import moment from 'moment'
+import uuid from 'uuid'
 import * as http from './modules/data/http'
 import * as actions from './modules/core/actions'
 import * as utils from './modules/utils'
@@ -67,7 +68,8 @@ riot.mixin({
   initState: actions.initState(),
   number: numeral,
   moment,
-  refresh: () => globalState.refresh()
+  refresh: () => globalState.refresh(),
+  uuid
 })
 
 // namespaced mixins
