@@ -17,7 +17,7 @@ function init(models, sequelize) {
 
   router.get('/',
     filter.middleware.loadPaging(),
-    filter.middleware.loadSort(['name', 'area']),
+    filter.middleware.loadSort(['name', 'area'], 'name'),
     filter.middleware.loadMatch('name', 'search', false),
     core.middleware.list(models.Neighborhood),
     core.middleware.count(models.Neighborhood),
@@ -26,7 +26,7 @@ function init(models, sequelize) {
 
   router.get('/reports',
     filter.middleware.loadPaging(),
-    filter.middleware.loadSort(['name', 'area', 'num_rodents', 'num_establishments']),
+    filter.middleware.loadSort(['name', 'area', 'num_rodents', 'num_establishments'], 'name'),
     filter.middleware.loadMatch('name', 'search', false),
     middleware.listReports(models.Neighborhood, sequelize),
     core.middleware.count(models.Neighborhood),

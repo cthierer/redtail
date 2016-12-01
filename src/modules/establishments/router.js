@@ -16,7 +16,7 @@ function init(models) {
 
   router.get('/',
     filter.middleware.loadPaging(),
-    filter.middleware.loadSort(['created_at']),
+    filter.middleware.loadSort(['created_at'], 'name'),
     filter.middleware.loadEqual('neighborhood_id', 'neighborhood'),
     core.middleware.list(models.Establishment),
     core.middleware.count(models.Establishment),

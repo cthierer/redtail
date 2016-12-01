@@ -15,7 +15,7 @@ function init(models) {
   const router = express.Router()
 
   router.get('/',
-    filter.middleware.loadSort(['title']),
+    filter.middleware.loadSort(['title'], 'title'),
     core.middleware.list(models.Source)
   )
 

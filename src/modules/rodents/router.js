@@ -17,7 +17,7 @@ function init(models) {
 
   router.get('/',
     filter.middleware.loadPaging(),
-    filter.middleware.loadSort(['created_at']),
+    filter.middleware.loadSort(['created_at'], 'created_at'),
     filter.middleware.loadEqual('neighborhood_id', 'neighborhood'),
     list(models.Rodent, models.Status, models.Source, models.Agency),
     core.middleware.count(models.Rodent),

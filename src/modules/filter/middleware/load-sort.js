@@ -23,7 +23,7 @@ const LEGAL_ORDER = ['asc', 'desc']
  *  sorted in, if an order isn't provided.
  * @returns {function} Middleware function.
  */
-function loadSort(fields = [], defaultOrder = LEGAL_ORDER[0]) {
+function loadSort(fields = [], defaultField = null, defaultOrder = LEGAL_ORDER[0]) {
   return (req, res, next) => {
     const logger = req.ctx.logger.child({ middleware: 'loadSort' })
     const sortParam = req.query.sort || null
@@ -65,6 +65,10 @@ function loadSort(fields = [], defaultOrder = LEGAL_ORDER[0]) {
     if (errors.length) {
       req.ctx.status = 400
       next(errors)
+    }
+
+    if (defaultField) {
+      req.ctx.sort.addSort(defaultField, defaultOrder)
     }
 
     return next()
