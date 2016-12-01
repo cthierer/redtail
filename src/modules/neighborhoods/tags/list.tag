@@ -1,17 +1,17 @@
 <neighborhoods-list>
-  <h2>Neighborhoods</h2>
-  <div class="neighborhood-listing row">
-    <div class="col-sm-4 push-sm-8">
-      <div class="filter">
-        <h3>Filter</h3>
-        <form onsubmit={ filter }>
-          <filter-match name="search" filter={ state.filter }>
-            <core-icon name="search" alt="Search"></core-icon>
-          </filter-match>
-        </form>
+  <h2>Rodent Tracker</h2>
+  <div class="neighborhood-listing">
+    <div class="row">
+      <div class="col-sm-12 toolbar">
+        <button class="btn btn-primary" onclick={ reportRodent }>
+          <core-icon name="diff-added"></core-icon>
+          Report rodent
+        </button>
       </div>
-      <div class="sort">
-        <h3>Sort</h3>
+    </div>
+    <div class="row">
+      <div class="col-md-7 sort">
+        <h3>Sort by</h3>
         <ul class="list-inline">
           <li class="list-inline-item" data-is="filter-sorter" label="Name" name="name" sort={ state.sort }></li>
           <li class="list-inline-item" data-is="filter-sorter" label="Area" name="area" sort={ state.sort }></li>
@@ -19,15 +19,18 @@
           <li class="list-inline-item" data-is="filter-sorter" label="Establishments" name="num_establishments" sort={ state.sort }></li>
         </ul>
       </div>
-    </div>
-    <div class="col-sm-8 pull-sm-4">
-      <div class="toolbar">
-        <button class="btn" onclick={ reportRodent }>
-          <core-icon name="diff-added"></core-icon>
-          Report rodent
-        </button>
+      <div class="col-md-5 text-md-right filter">
+        <h3 class="sr-only">Filter</h3>
+        <form onsubmit={ filter }>
+          <filter-match name="search" filter={ state.filter }>
+            <core-icon name="search" alt="Search"></core-icon>
+            Name
+          </filter-match>
+        </form>
       </div>
-      <div class="results">
+    </div>
+    <div class="row">
+      <div class="col-sm-12 results">
         <h3 class="sr-only">Results</h3>
         <div each={ state.result }>
           <neighborhoods-list-item neighborhood={ this } state={ parent.state }></neighborhoods-list-item>
@@ -71,4 +74,29 @@
       return false
     }
   </script>
+  <style scoped>
+    .toolbar {
+      margin-top: 7px;
+      margin-bottom: 15px;
+    }
+
+    .sort .list-inline {
+      display: inline;
+    }
+
+    .sort .list-inline-item {
+      margin-right: 15px;
+    }
+
+    .sort h3 {
+      display: inline;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-right: 7px;
+    }
+
+    .filter label {
+      font-weight: 700
+    }
+  </style>
 </neighborhoods-list>

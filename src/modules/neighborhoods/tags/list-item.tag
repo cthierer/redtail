@@ -105,6 +105,13 @@
     }
   </script>
   <style scoped>
+    .neighborhood .card-header {
+      background-color: #6d0e0e;
+      border-color: #6d0e0e;
+      color: white;
+      font-weight: 700;
+    }
+
     .field-list-center .data-field {
       display: inline-block;
       margin-left: 1%;

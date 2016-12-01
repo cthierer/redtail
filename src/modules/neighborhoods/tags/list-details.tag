@@ -1,22 +1,28 @@
 <neighborhoods-list-details>
-  <div class="data-field-group" show={ recentRodent }>
-    <div class="data-field">
-      <div class="data-label">Last reported</div>
-      <div class="data-value">
-        { moment(recentRodent.created_at).calendar() }
+  <div class="row">
+    <div class="col-md-9">
+      <div class="data-map">
+        <neighborhoods-map neighborhood={ neighborhood.id } rodents={ opts.rodents } establishments={ opts.establishments }></neighborhoods-map>
       </div>
-      <div class="data-value">
-        { recentRodent.street }
-      </div>
-      <div class="data-value">
-        { recentRodent.status.title } &dash; { recentRodent.notes }
-      </div>
-      <rodents-edit-button id={ recentRodent.id }>Edit</rodents-edit-button>
-      <rodents-remove-button id={ recentRodent.id }>Delete</rodents-remove-button>
     </div>
-  </div>
-  <div class="data-map">
-    <neighborhoods-map neighborhood={ neighborhood.id } rodents={ opts.rodents } establishments={ opts.establishments }></neighborhoods-map>
+    <div class="col-md-3">
+      <div class="data-field-group" show={ recentRodent }>
+        <div class="data-field">
+          <div class="data-label">Last reported</div>
+          <div class="data-value">
+            { moment(recentRodent.created_at).calendar() }
+          </div>
+          <div class="data-value">
+            { recentRodent.street }
+          </div>
+          <div class="data-value">
+            { recentRodent.status.title } &dash; { recentRodent.notes }
+          </div>
+          <rodents-edit-button id={ recentRodent.id }>Edit</rodents-edit-button>
+          <rodents-remove-button id={ recentRodent.id }>Delete</rodents-remove-button>
+        </div>
+      </div>
+    </div>
   </div>
   <script type="babel">
     const rodentActions = this.mixin('rodents').rodents

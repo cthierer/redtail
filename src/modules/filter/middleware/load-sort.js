@@ -67,7 +67,7 @@ function loadSort(fields = [], defaultField = null, defaultOrder = LEGAL_ORDER[0
       next(errors)
     }
 
-    if (defaultField) {
+    if (defaultField && !req.ctx.sort.getDirection(defaultField)) {
       req.ctx.sort.addSort(defaultField, defaultOrder)
     }
 

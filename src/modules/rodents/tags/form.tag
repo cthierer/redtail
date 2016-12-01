@@ -1,136 +1,175 @@
 <rodents-form>
+  <h2>
+    { rodent.id ? 'Update report' : 'Report rodent' }
+  </h2>
   <form onsubmit={ save }>
     <input type="hidden" name="id" value={ rodent.id }>
+
     <fieldset>
       <legend>Neighborhood</legend>
-      <div class="form-group">
-        <label class="sr-only" for="rodentNeighborhood">Neighborhood</label>
-        <select name="neighborhood_id"
-            class="form-control"
-            id="rodentNeighborhood"
-            required>
-          <option each={ neighborhoods.result }
-              value={ id }
-              selected={ parent.rodent.neighborhood_id == id }>
-            { name }
-          </option>
-        </select>
+      <div class="row">
+        <div class="col-md-8">
+          <div class="form-group">
+            <label class="sr-only" for="rodentNeighborhood">Neighborhood</label>
+            <select name="neighborhood_id"
+                class="form-control"
+                id="rodentNeighborhood"
+                required>
+              <option each={ neighborhoods.result }
+                  value={ id }
+                  selected={ parent.rodent.neighborhood_id == id }>
+                { name }
+              </option>
+            </select>
+          </div>
+        </div>
       </div>
     </fieldset>
 
     <fieldset>
       <legend>Address</legend>
-      <div class="form-group">
-        <label for="rodentStreet">Street</label>
-        <input type="text"
-          name="street"
-          class="form-control"
-          id="rodentStreet"
-          onchange={ geocode }
-          required
-          value={ rodent.street }>
-      </div>
-      <div class="form-group">
-        <label for="rodentCity">City</label>
-        <input type="text"
-          name="city"
-          class="form-control"
-          id="rodentCity"
-          onchange={ geocode }
-          disabled
-          required
-          value={ rodent.city || "Baltimore" }>
-      </div>
-      <div class="form-group">
-        <label for="rodentState">State</label>
-        <input type="text"
-          name="state"
-          class="form-control"
-          id="rodentState"
-          onchange={ geocode }
-          disabled
-          required
-          value={ rodent.state || "MD" }>
-      </div>
-      <div class="form-group">
-        <label for="rodentZip">Zip</label>
-        <input type="text"
-          name="zip"
-          class="form-control"
-          id="rodentZip"
-          onchange={ geocode }
-          required
-          pattern="[0-9]\{5\}(-[0-9]\{4\})?"
-          value={ rodent.zip }>
-      </div>
-
-      <div class="form-group">
-        <label>Location</label>
-        <input type="hidden" name="latitude" value={ getLat() }>
-        <input type="hidden" name="longitude" value={ getLng() }>
-        <core-map markers={ marker ? [marker] : [] }></core-map>
-      </div>
-    </fieldset>
-
-    <fieldset class="form-group">
-      <legend>Source</legend>
-      <div each={ sources.result } class="form-check">
-        <label class="form-check-label">
-          <input type="radio"
-            name="source_id"
-            class="form-check-input"
-            value={ id }
-            checked={ parent.rodent.source_id == id }
-            required>
-          { title }
-        </label>
+      <div class="row">
+        <div class="col-md-8">
+          <div class="form-group">
+            <label for="rodentStreet">Street</label>
+            <input type="text"
+              name="street"
+              class="form-control"
+              id="rodentStreet"
+              onchange={ geocode }
+              required
+              value={ rodent.street }>
+          </div>
+          <div class="form-group">
+            <label for="rodentCity">City</label>
+            <input type="text"
+              name="city"
+              class="form-control"
+              id="rodentCity"
+              onchange={ geocode }
+              disabled
+              required
+              value={ rodent.city || "Baltimore" }>
+          </div>
+          <div class="form-group">
+            <label for="rodentState">State</label>
+            <input type="text"
+              name="state"
+              class="form-control"
+              id="rodentState"
+              onchange={ geocode }
+              disabled
+              required
+              value={ rodent.state || "MD" }>
+          </div>
+          <div class="form-group">
+            <label for="rodentZip">Zip</label>
+            <input type="text"
+              name="zip"
+              class="form-control"
+              id="rodentZip"
+              onchange={ geocode }
+              required
+              pattern="[0-9]\{5\}(-[0-9]\{4\})?"
+              value={ rodent.zip }>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Location</label>
+            <input type="hidden" name="latitude" value={ getLat() }>
+            <input type="hidden" name="longitude" value={ getLng() }>
+            <core-map markers={ marker ? [marker] : [] }></core-map>
+          </div>
+        </div>
       </div>
     </fieldset>
 
-    <fieldset>
-      <legend>Assign to</legend>
-      <div each={ agencies.result } class="form-check">
-        <label class="form-check-label">
-          <input type="radio"
-            name="agency_id"
-            class="form-check-input"
-            value={ id }
-            checked={ parent.rodent.agency_id == id}
-            required>
-          { name }
-        </label>
+    <div class="row">
+      <div class="col-md-4">
+        <fieldset class="form-group">
+          <legend>Source</legend>
+          <div class="row">
+            <div class="col-md-12">
+              <div each={ sources.result } class="form-check">
+                <label class="form-check-label">
+                  <input type="radio"
+                    name="source_id"
+                    class="form-check-input"
+                    value={ id }
+                    checked={ parent.rodent.source_id == id }
+                    required>
+                  { title }
+                </label>
+              </div>
+            </div>
+          </div>
+        </fieldset>
       </div>
-    </fieldset>
 
-    <fieldset>
-      <legend>Status</legend>
-      <div each={ statuses.result } class="form-check">
-        <label class="form-check-label">
-          <input type="radio"
-            name="status_id"
-            class="form-check-input"
-            value={ id }
-            checked={ parent.rodent.status_id == id }
-            required>
-          { title }
-        </label>
+      <div class="col-md-4">
+        <fieldset>
+          <legend>Assign to</legend>
+          <div class="row">
+            <div class="col-md-12">
+              <div each={ agencies.result } class="form-check">
+                <label class="form-check-label">
+                  <input type="radio"
+                    name="agency_id"
+                    class="form-check-input"
+                    value={ id }
+                    checked={ parent.rodent.agency_id == id}
+                    required>
+                  { name }
+                </label>
+              </div>
+            </div>
+          </div>
+        </fieldset>
       </div>
-    </fieldset>
+
+      <div class="col-md-4">
+        <fieldset>
+          <legend>Status</legend>
+          <div class="row">
+            <div class="col-md-12">
+              <div each={ statuses.result } class="form-check">
+                <label class="form-check-label">
+                  <input type="radio"
+                    name="status_id"
+                    class="form-check-input"
+                    value={ id }
+                    checked={ parent.rodent.status_id == id }
+                    required>
+                  { title }
+                </label>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </div>
 
     <fieldset>
       <legend>Notes</legend>
-      <div class="form-group">
-        <label class="sr-only" for="rodentNotes">Notes</label>
-        <textarea name="notes"
-          class="form-control"
-          id="rodentNotes"
-          value={ rodent.notes }></textarea>
+      <div class="row">
+        <div class="col-md-8">
+          <div class="form-group">
+            <label class="sr-only" for="rodentNotes">Notes</label>
+            <textarea name="notes"
+              class="form-control"
+              id="rodentNotes"
+              value={ rodent.notes }></textarea>
+          </div>
+        </div>
       </div>
     </fieldset>
 
-    <button type="submit" class="btn btn-primary">
-      { rodent.id ? 'Update' : 'Create' }
-    </button>
+    <div class="toolbar form-group">
+      <button type="submit" class="btn btn-primary btn-lg">
+        { rodent.id ? 'Update' : 'Create' }
+      </button>
+    </div>
   </form>
   <script type="babel">
     const leaflet = this.mixin('leaflet').leaflet
@@ -217,4 +256,9 @@
       return false
     }
   </script>
+  <style scoped>
+    .map {
+      height: 300px;
+    }
+  </style>
 </rodents-form>
