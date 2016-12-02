@@ -1,0 +1,9 @@
+{
+  "redtail": {
+    "api_base": {
+      "protocol": "https",
+      "hostname": "intense-refuge-76008.herokuapp.com",
+      "port": ""
+    }
+  }
+}

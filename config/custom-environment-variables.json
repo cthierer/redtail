@@ -1,9 +1,4 @@
 {
-  "redtail": {
-    "api_base": {
-      "port": "PORT"
-    }
-  },
   "models": {
     "db": {
       "database": "DB_NAME",

@@ -8,7 +8,8 @@
 const redtail = require('./app')
 
 const app = redtail.default
+const port = app.port || process.env.PORT || 3000
 
-app.server.listen(app.port, () => {
-  app.logger.info('server started, listening on port %s', app.port)
+app.server.listen(port, () => {
+  app.logger.info('server started, listening on port %s', port)
 })
