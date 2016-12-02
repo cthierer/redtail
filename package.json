@@ -28,9 +28,11 @@
     "posttest:unit": "nyc --lines 90 --statements 90 report --reporter=lcov --reporter=json-summary",
     "test:lint": "eslint --ext .js src",
     "watch": "nodemon --watch src --exec './node_modules/.bin/run-s build restart'",
-    "bin:initData": "run-s bin:initTables bin:populateData",
+    "bin:initData": "run-s bin:initTables bin:importData",
+    "bin:refreshData": "run-s bin:initTables bin:populateData",
     "bin:initTables": "node app/bin/initTables",
-    "bin:populateData": "node app/bin/populateData"
+    "bin:populateData": "node app/bin/populateData",
+    "bin:importData": "node app/bin/importData sql/data.sql"
   },
   "repository": {
     "type": "git",
