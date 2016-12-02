@@ -6,7 +6,13 @@
   },
   "models": {
     "db": {
-      "password": "DB_PASSWORD"
+      "database": "DB_NAME",
+      "username": "DB_USERNAME",
+      "password": "DB_PASSWORD",
+      "options": {
+        "host": "DB_HOST",
+        "port": "DB_PORT"
+      }
     }
   }
 }
