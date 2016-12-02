@@ -7,6 +7,7 @@ import url from 'url'
 import express from 'express'
 import config from 'config'
 import bodyParser from 'body-parser'
+import cors from 'cors'
 import models, { sequelize } from './modules/models'
 import geocoder from './modules/geocoder/router'
 import * as Logger from './modules/logger'
@@ -49,6 +50,15 @@ app.use(
   core.middleware.generateId(),   // initilaize req.ctx.requestId
   core.middleware.initLogger()    // initialize req.ctx.logger
 )
+
+if (config.get('redtail.cors.enabled')) {
+  const corsMiddleware = cors({
+    exposedHeaders: ['X-Request-Id']
+  })
+
+  app.use(corsMiddleware)
+  app.options('*', corsMiddleware)
+}
 
 // serve the client application files
 app.use(express.static('dist'))

@@ -23,6 +23,9 @@
       },
       "initial_view": [39.299236, -76.609383],
       "initial_zoom": 13
+    },
+    "cors": {
+      "enabled": false
     }
   },
   "geocoder": {
