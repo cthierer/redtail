@@ -34,7 +34,8 @@
       </p>
       <neighborhoods-list-details show={ hasDetails() } neighborhood={ neighborhood }
         establishments={ establishments }
-        rodents={ rodents }>
+        rodents={ rodents }
+        state={ state }>
       </neighborhoods-list-details>
     </div>
     <div class="card-footer">

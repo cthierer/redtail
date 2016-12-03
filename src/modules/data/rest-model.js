@@ -34,7 +34,7 @@ class RESTModel {
    * @param {string} baseUrl The base URL to the remote service.
    * @param {string} endpoint The path to the model-specific endpoint.
    */
-  constructor(baseUrl, endpoint) {
+  constructor(baseUrl, endpoint, modelName) {
     /**
      * The base URL to the remote servce.
      * @type {string}
@@ -46,6 +46,8 @@ class RESTModel {
      * @type {string}
      */
     this.endpoint = endpoint
+
+    this.modelName = modelName
 
     /**
      * The full URL to the endpoint.

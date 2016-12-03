@@ -25,7 +25,13 @@ async function request(options, method = 'GET') {
     .then((response) => {
       if (response.status >= 400) {
         // TODO use custom error
-        throw new Error(`Error retrieving data from remote: ${response.status}`)
+        const err = new Error(`Error retrieving data from remote: ${response.status}`)
+
+        err.status = response.status
+        err.body = response.body
+        err.response = response
+
+        throw err
       }
       return response.body
     })

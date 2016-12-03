@@ -13,6 +13,10 @@
       this.refresh()
     })
 
+    this.state.on('core.state.notify', (type, notification) => {
+      opts.state.notify(type, notification.message, notification.details)
+    })
+
     this.on('update', () => {
       this.state.id = opts.id
     })

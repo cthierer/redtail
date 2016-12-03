@@ -4,6 +4,7 @@
 
 import State from '../models/state'
 import * as stateUtils from '../utils/state'
+import { propagate } from '../../utils/events'
 
 /**
  * Initialize a new state object with the given options.
@@ -13,12 +14,16 @@ import * as stateUtils from '../utils/state'
  * @see {State}
  */
 function initState(stateOptions = {}) {
-  return () => {
+  return (rootState) => {
     const state = new State(stateOptions)
 
     state.on('core.links.navigate', (toLink) => {
       stateUtils.loadLink(toLink, state)
     })
+
+    if (rootState) {
+      propagate(state, rootState)
+    }
 
     return state
   }

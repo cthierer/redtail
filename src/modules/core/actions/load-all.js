@@ -16,6 +16,9 @@ function loadAll(model, defaultOptions = {}) {
       state.loadResponse(response)
       return state
     })
+    .catch((err) => {
+      state.notifyError('Unexpected error while loading data.', err.body)
+    })
 }
 
 export default loadAll

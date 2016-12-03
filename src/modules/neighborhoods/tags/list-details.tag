@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-9">
       <div class="data-map">
-        <neighborhoods-map neighborhood={ neighborhood.id } rodents={ opts.rodents } establishments={ opts.establishments }></neighborhoods-map>
+        <neighborhoods-map neighborhood={ neighborhood.id } rodents={ opts.rodents } establishments={ opts.establishments } state={ opts.state }></neighborhoods-map>
       </div>
     </div>
     <div class="col-md-3">
@@ -18,8 +18,8 @@
           <div class="data-value">
             { recentRodent.status.title } &dash; { recentRodent.notes }
           </div>
-          <rodents-edit-button id={ recentRodent.id }>Edit</rodents-edit-button>
-          <rodents-remove-button id={ recentRodent.id }>Delete</rodents-remove-button>
+          <rodents-edit-button id={ recentRodent.id } state={ opts.state }>Edit</rodents-edit-button>
+          <rodents-remove-button id={ recentRodent.id } state={ opts.state }>Delete</rodents-remove-button>
         </div>
       </div>
     </div>

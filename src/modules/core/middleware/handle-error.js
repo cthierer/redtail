@@ -23,6 +23,7 @@ function handleError() {
     const logger = req.ctx.logger.child({ middleware: 'handleError' })
     const status = req.ctx.status
     const message = Array.isArray(err) ? err.map(error => error.message).join() : err.message
+    let error = err
 
     if (status && status >= 400 && status < 500) {
       if (logger.info()) {
@@ -30,6 +31,14 @@ function handleError() {
       }
 
       res.status(status)
+    } else if (err && err.name && err.name === 'SequelizeValidationError') {
+      if (logger.info()) {
+        logger.info({ err }, 'encountered a validation error: %s', message)
+      }
+
+      error = err.errors
+
+      res.status(400)
     } else {
       if (logger.error()) {
         logger.error({ err }, 'encountered an unexpected error: %s', message)
@@ -39,20 +48,20 @@ function handleError() {
     }
 
     // TODO consolidate into single flow
-    if (Array.isArray(err)) {
-      res.send(err.map(error => Object.assign({}, {
-        message: error.message,
-        code: error.code,
-        value: error.value,
-        field: error.field,
+    if (Array.isArray(error)) {
+      res.send(error.map(e => Object.assign({}, {
+        message: e.message,
+        code: e.code || e.type,
+        value: e.value,
+        field: e.field || e.path,
         request_id: req.ctx.requestId
       })))
     } else {
       res.send([{
         message,
-        code: err.code,
-        value: err.value,
-        field: err.field,
+        code: error.code,
+        value: error.value,
+        field: error.field,
         request_id: req.ctx.requestId
       }])
     }

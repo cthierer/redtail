@@ -26,7 +26,7 @@
 
         marker.on('popupopen', (e) => {
           // mount the popup
-          riot.mount(`#${popupId}`, detailsTag, { location })
+          riot.mount(`#${popupId}`, detailsTag, { location, state: opts.state })
         })
 
         return marker

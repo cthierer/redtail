@@ -169,6 +169,24 @@ class State extends EventEmitter {
   queryUpdated() {
     this.emit('core.state.queryUpdated', this)
   }
+
+  notify(type, message, details) {
+    const notification = { message, details }
+    this.emit('core.state.notify', type, notification)
+    this.emit(`core.state.notify.${type}`, notification)
+  }
+
+  notifyInfo(message) {
+    this.notify('info', message)
+  }
+
+  notifySuccess(message = 'Success!', details) {
+    this.notify('success', message, details)
+  }
+
+  notifyError(message = 'An error ocurred', details) {
+    this.notify('error', message, details)
+  }
 }
 
 export default State

@@ -243,13 +243,16 @@
 
     this.save = (e) => {
       const data = helpers.serialize(e.target, { hash: true, disabled: true })
-      const saveState = this.initState()
+      const saveState = this.initState(opts.state)
 
       saveState.data = data
       saveState.on('core.state.updated', (updated) => {
         if (updated && updated.result) {
           riot.route('neighborhoods')
         }
+      })
+      saveState.on('core.state.notify.error', () => {
+        window.scrollTo(0, 0)
       })
 
       helpers.save(saveState)

@@ -25,6 +25,8 @@ window.riot = riot
 
 const globalState = actions.initState()()
 
+globalState.isGlobal = true
+
 /**
  * Mount a tag as the main application tag.
  * @returns {function} Returns a mount function that when called with a tag
@@ -94,5 +96,9 @@ http.getDataAsJSON({ url: 'API_CONFIG_URL' })
     // start listining to route changes
     riot.route.start(true)
   })
+
+window.onload = () => {
+  riot.mount('*', { state: globalState })
+}
 
 export default { riot }

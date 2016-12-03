@@ -30,7 +30,7 @@ const tags = {
  * @see http://riotjs.com/api/#mixins
  */
 async function init(route, mount, mixin, config) {
-  const rodentModel = new data.RESTModel(config.api_base, config.endpoints.rodents)
+  const rodentModel = new data.RESTModel(config.api_base, config.endpoints.rodents, 'rodent report')
   const geocodes = new data.RESTModel(config.api_base, config.endpoints.geocodes)
   const neighborhoodsModel = new data.RESTModel(config.api_base, config.endpoints.neighborhoods)
   const agenciesModel = new data.RESTModel(config.api_base, config.endpoints.agencies)
