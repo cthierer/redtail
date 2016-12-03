@@ -47,7 +47,13 @@ module.exports = {
       jQuery: 'jquery',
       $: 'jquery',
       'window.Tether': 'tether'
-    })
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    }),
+    new webpack.optimize.DedupePlugin()
   ],
   node: {
     fs: 'empty'

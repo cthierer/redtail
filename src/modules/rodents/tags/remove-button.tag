@@ -9,7 +9,7 @@
     this.state = this.initState()
 
     this.state.on('core.state.updated', () => {
-      riot.route('neighborhoods')
+      riot.route('/')
       this.refresh()
     })
 

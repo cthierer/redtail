@@ -8,6 +8,7 @@ import express from 'express'
 import config from 'config'
 import bodyParser from 'body-parser'
 import cors from 'cors'
+import compression from 'compression'
 import models, { sequelize } from './modules/models'
 import geocoder from './modules/geocoder/router'
 import * as Logger from './modules/logger'
@@ -43,6 +44,7 @@ const app = express()
 
 const paths = config.get('redtail.paths')
 
+app.use(compression())
 app.use(bodyParser.json())
 
 app.use(

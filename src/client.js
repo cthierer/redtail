@@ -3,8 +3,6 @@
  * @module redtail/client
  */
 
-import 'bootstrap'
-
 import riot from 'riot/riot'
 import octicons from 'octicons'
 import numeral from 'numeral'
