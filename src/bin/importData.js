@@ -1,10 +1,24 @@
 /* eslint-disable no-console */
 
+/**
+ * Run a SQL file against the database, using the database credentials. Invoked
+ * with a single argument: the path and name of the SQL file to import.
+ *
+ * Uses the database configuration and credentials from the application
+ * configuration for the current environment.
+ *
+ * @example
+ * node importData ./sql/my-data.sql
+ *
+ * @module redtail/bin/importData
+ */
+
 import mysql from 'mysql'
 import config from 'config'
 import fs from 'fs'
 import path from 'path'
 
+const fileName = process.argv[2]
 const dbConfig = config.get('models.db')
 const connection = mysql.createConnection({
   host: dbConfig.options.host,
@@ -14,12 +28,17 @@ const connection = mysql.createConnection({
   port: dbConfig.options.port,
   multipleStatements: true
 })
-const fileName = process.argv[2]
 
 if (!fileName) {
   throw new Error('missing required parameter: filename')
 }
 
+/**
+ * Import a SQL file contents into the database by passing it to the MySQL
+ * connection.
+ * @param {string} contents The SQL file to import.
+ * @returns {Promise} Resolves when the operation is complete.
+ */
 async function importFile(contents) {
   return new Promise((resolve, reject) => {
     connection.query(contents.toString(), (err) => {
@@ -33,6 +52,11 @@ async function importFile(contents) {
   })
 }
 
+/**
+ * Read a SQL file from disk.
+ * @param {string} file The path to the file to read.
+ * @returns {Promise} Resolves to the contents of the read file.
+ */
 async function readFile(file) {
   return new Promise((resolve, reject) => {
     fs.readFile(file, (err, data) => {

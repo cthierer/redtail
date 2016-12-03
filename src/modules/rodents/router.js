@@ -24,21 +24,10 @@ function init(models) {
     filter.middleware.setPagingLinks()
   )
 
-  router.post('/',
-    core.middleware.create(models.Rodent)
-  )
-
-  router.get('/:id',
-    core.middleware.getById(models.Rodent)
-  )
-
-  router.put('/:id',
-    core.middleware.update(models.Rodent)
-  )
-
-  router.delete('/:id',
-    core.middleware.remove(models.Rodent)
-  )
+  router.post('/', core.middleware.create(models.Rodent))
+  router.get('/:id', core.middleware.getById(models.Rodent))
+  router.put('/:id', core.middleware.update(models.Rodent))
+  router.delete('/:id', core.middleware.remove(models.Rodent))
 
   return router
 }

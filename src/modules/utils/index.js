@@ -7,4 +7,9 @@ import * as functions from './functions'
 import * as objects from './objects'
 import * as urls from './urls'
 
-export { events, functions, objects, urls }
+export {
+  events,
+  functions,
+  objects,
+  urls
+}

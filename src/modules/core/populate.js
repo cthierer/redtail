@@ -1,3 +1,6 @@
+/**
+ * @module redtail/modules/core/populate
+ */
 
 import Promise from 'bluebird'
 import Sequelize from 'sequelize'

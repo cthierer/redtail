@@ -1,6 +1,11 @@
 /* eslint-disable no-console */
 
 /**
+ * Populate data in the database from the remote data sources.
+ *
+ * @example
+ * node populateData
+ *
  * @module redtail/bin/populateData
  */
 

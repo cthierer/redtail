@@ -27,6 +27,12 @@ const NOT_ZERO = 'filter.not_zero'
 const NOT_IN_SET = 'filter.not_in_set'
 
 /**
+ * Code for if a value was expected to be not-empty, but was empty.
+ * @type {string}
+ */
+const EMPTY = 'filter.empty'
+
+/**
  * Encapsulates a validation error, which occurs when a user input field does
  * not match an expected value.
  * @class
@@ -86,8 +92,25 @@ class Validator {
   }
 
   /**
+   * Check if the value is a non-empty string.
+   * @returns {Validator} Reference to this instance (for chainig).
+   * @throws {ValidationError} If the value is empty.
+   */
+  isNotEmpty() {
+    if (typeof this.value === 'string' && this.value.trim().length < 1) {
+      throw new ValidationError(EMPTY, this.field, this.value,
+        `"${this.field}" must not be an empty string`)
+    } else if (!this.value) {
+      throw new ValidationError(EMPTY, this.field, this.value,
+        `"${this.field}" must not be empty`)
+    }
+
+    return this
+  }
+
+  /**
    * Check if the value is a number, and is not NaN.
-   * @returns {this} Reference to this instance (for chaining).
+   * @returns {Validator} Reference to this instance (for chaining).
    * @throws {ValidationError} If the value is not a number.
    */
   isNumber() {
@@ -101,7 +124,7 @@ class Validator {
 
   /**
    * Check if the value is positive or zero.
-   * @returns {this} Reference to this instance (for chaining).
+   * @returns {Validator} Reference to this instance (for chaining).
    * @throws {ValidationError} If the value is negative.
    */
   isPositiveOrZero() {
@@ -115,7 +138,7 @@ class Validator {
 
   /**
    * Check if the value is positive and not zero.
-   * @returns {this} Reference to this instance (for chaining).
+   * @returns {Validator} Reference to this instance (for chaining).
    * @throws {ValidationError} If the value is negative or zero.
    */
   isPositive() {
@@ -132,7 +155,7 @@ class Validator {
 
   /**
    * Check if the value is in the provided collection.
-   * @returns {this} Reference to this instance (for chaining).
+   * @returns {Validator} Reference to this instance (for chaining).
    * @throws {ValidationError} If the value is not in the provided set of
    *  legal values.
    */

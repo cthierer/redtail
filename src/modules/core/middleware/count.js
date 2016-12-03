@@ -8,15 +8,26 @@
  * of the request context (`req.ctx.count`).
  * @param {Model} model The data model to count.
  * @returns {function} Middleware function.
- * @todo Move this into a core module.
  */
 function count(model) {
   return (req, res, next) => {
-    model.count(req.ctx.getFilter())
+    const logger = req.ctx.logger.child({ middleware: 'count', model_name: model.modelName })
+    const filter = req.ctx.getFilter()
+
+    if (logger.debug()) {
+      logger.debug({ filter }, 'preparing to count number of instances')
+    }
+
+    model.count(filter)
       .then((total) => {
+        if (logger.debug()) {
+          logger.debug({ total }, 'counted %s instances', total)
+        }
+
         req.ctx.count = total
         next()
       })
+      .catch(next)
   }
 }
 

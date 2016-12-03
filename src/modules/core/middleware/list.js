@@ -7,17 +7,29 @@
  * context (`req.ctx.filter`).
  * @param {Model} model The database model to query.
  * @returns {function} Middleware function.
- * @todo Move this into a core module.
  */
 function list(model) {
   return (req, res, next) => {
-    model.findAll(req.ctx.getQueryOptions())
+    const logger = req.ctx.logger.child({ middleware: 'list', model_name: model.modelName })
+    const filter = req.ctx.getQueryOptions()
+
+    if (logger.debug()) {
+      logger.debug({ filter }, 'finding all instances that match the filter')
+    }
+
+    model.findAll(filter)
       .then(instances => instances.map(instance => instance.get()))
       .then((results) => {
+        if (logger.debug()) {
+          logger.debug({ count: results.length }, 'found %s results matching the filter',
+            results.length)
+        }
+
         req.ctx.status = 200
         req.ctx.result = results
         next()
       })
+      .catch(next)
   }
 }
 

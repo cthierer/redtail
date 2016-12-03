@@ -5,4 +5,7 @@
 import DataEmitter from './data-emitter'
 import State from './state'
 
-export { DataEmitter, State }
+export {
+  DataEmitter,
+  State
+}

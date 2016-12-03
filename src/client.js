@@ -1,3 +1,5 @@
+/* eslint-env browser */
+
 /**
  * Entry point for the client component.
  * @module redtail/client
@@ -17,14 +19,15 @@ import * as rodents from './modules/rodents/tags'
 import * as establishments from './modules/establishments/tags'
 import { init } from './tags'
 
-/* eslint-env browser */
-
 // load globals on browser window, if this is a browser
 window.riot = riot
 
+/**
+ * The global application state. This is passed into all top-level tags,
+ * which may chose to extend it to lower tags as necessary.
+ * @type {State}
+ */
 const globalState = actions.initState()()
-
-globalState.isGlobal = true
 
 /**
  * Mount a tag as the main application tag.
@@ -94,8 +97,7 @@ http.getDataAsJSON({ url: 'API_CONFIG_URL' })
     riot.route.start(true)
   })
 
+// mount once the document has loaded
 window.onload = () => {
   riot.mount('*', { state: globalState })
 }
-
-export default { riot }

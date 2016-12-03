@@ -12,6 +12,27 @@ import * as utils from '../../utils'
 const ORDER = 'order'
 
 /**
+ * Key to notify users of an error.
+ * @type {string}
+ * @see {State#notify}
+ */
+const NOTIFY_ERROR = 'error'
+
+/**
+ * Key to notify users of an informational message.
+ * @type {string}
+ * @see {State#notify}
+ */
+const NOTIFY_INFO = 'info'
+
+/**
+ * Key to notify users of a success.
+ * @type {string}
+ * @see {State#notify}
+ */
+const NOTIFY_SUCCESS = 'success'
+
+/**
  * Encapsulate application state.
  *
  * Emits the following events:
@@ -139,6 +160,70 @@ class State extends EventEmitter {
   }
 
   /**
+   * Notify subscribers that the user should be shown a notification message.
+   * @param {string} type The type of notification to show ('error', 'info',
+   *  'success').
+   * @param {string} message The message for the notification.
+   * @param {array|object} details Additional details to show with the
+   *  notification.
+   * @emits core.state.notify Including the type and notification details.
+   */
+  notify(type, message, details) {
+    const notification = { message, details }
+    this.emit('core.state.notify', type, notification)
+    this.emit(`core.state.notify.${type}`, notification)
+  }
+
+  /**
+   * Notify subscribers of an informational message.
+   * @param {string} message The informational message for the notification.
+   * @param {...any} args Arguments to pass to notify.
+   * @emits core.state.notify.info
+   * @see {State#notify}
+   */
+  notifyInfo(message, ...args) {
+    this.notify(NOTIFY_INFO, ...args)
+  }
+
+  /**
+   * Notify subscribers of a success message.
+   * @param {string} message The success message for the notification.
+   * @param {...any} args Additional arguments to pass to notify.
+   * @emits core.state.notify.success
+   * @see {State#notify}
+   */
+  notifySuccess(message = 'Success!', ...args) {
+    this.notify(NOTIFY_SUCCESS, message, ...args)
+  }
+
+  /**
+   * Notify subscribers of an error message.
+   * @param {string} message The error message for the notification.
+   * @param {...any} args Additional arguments to pass to notify.
+   * @emits core.state.notify.error
+   * @see {State#notify}
+   */
+  notifyError(message = 'An error ocurred', ...args) {
+    this.notify(NOTIFY_ERROR, message, ...args)
+  }
+
+  /**
+   * Notify subscribers that the query has been updated.
+   * @emits core.state.queryUpdated
+   */
+  queryUpdated() {
+    this.emit('core.state.queryUpdated', this)
+  }
+
+  /**
+   * Notify subscribers to refresh their result object.
+   * @emits core.state.refresh
+   */
+  refresh() {
+    this.emit('core.state.refresh', this)
+  }
+
+  /**
    * Generate a response object from the current state.
    * @returns {object} The generated response object.
    */
@@ -155,39 +240,13 @@ class State extends EventEmitter {
   }
 
   /**
-   * Fires the "core.state.updated" event, indicating that the application
-   * state has been updated. Passed the this State instance.
+   * Notify subscribers that the application state has been updated.
+   * @emits core.state.updated
    */
   updated() {
     this.emit('core.state.updated', this)
   }
-
-  refresh() {
-    this.emit('core.state.refresh', this)
-  }
-
-  queryUpdated() {
-    this.emit('core.state.queryUpdated', this)
-  }
-
-  notify(type, message, details) {
-    const notification = { message, details }
-    this.emit('core.state.notify', type, notification)
-    this.emit(`core.state.notify.${type}`, notification)
-  }
-
-  notifyInfo(message) {
-    this.notify('info', message)
-  }
-
-  notifySuccess(message = 'Success!', details) {
-    this.notify('success', message, details)
-  }
-
-  notifyError(message = 'An error ocurred', details) {
-    this.notify('error', message, details)
-  }
 }
 
 export default State
-export { ORDER }
+export { ORDER, NOTIFY_INFO, NOTIFY_SUCCESS, NOTIFY_ERROR }

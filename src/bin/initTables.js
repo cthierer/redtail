@@ -1,6 +1,13 @@
 /* eslint-disable no-console */
 
 /**
+ * Synchronize the application data models with the database, using the
+ * database configuration for the current environment. This overwrites any
+ * existing tables in the database.
+ *
+ * @example
+ * node initTables
+ *
  * @module redtail/bin/initTables
  */
 

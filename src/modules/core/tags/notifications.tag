@@ -16,6 +16,7 @@
     this.message = null
     this.details = []
 
+    // listen for notify events, and load data into the tag to show
     this.state.on('core.state.notify', (type, notification) => {
       this.reset()
       this.type = type
@@ -24,28 +25,39 @@
         ? notification.details
         : (notification.details ? [notification.details] : null)
       this.update()
+
+      // auto-hide info and success messages after 20 seconds
+      if (this.isInfo() || this.isSuccess()) {
+        setTimeout(() => this.dismiss(), 20000)
+      }
     })
 
-    this.state.on('core.state.updated', (state) => {
-      this.update({ state })
-    })
-
+    // check if the notification should be visible
     this.isVisible = () => this.type && this.message
+
+    // check if the notification is an error notification
     this.isError = () => this.type === 'error'
+
+    // check if the notification is an info notification
     this.isInfo = () => this.type === 'info'
+
+    // check if the notification is  a success notification
     this.isSuccess = () => this.type === 'success'
 
+    // reset the notification to its initial (empty) state
     this.reset = () => {
       this.type = null
       this.message = null
       this.details = []
     }
 
+    // dismiss the notification
     this.dismiss = () => {
       this.reset()
+      this.update()
     }
 
-    this.on('mount', () => {
+    this.on('before-mount', () => {
       this.reset()
     })
   </script>

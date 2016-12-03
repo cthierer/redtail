@@ -4,16 +4,15 @@
  */
 
 import express from 'express'
-import middleware from './middleware'
+import { getCoordinates } from './middleware'
 
 /**
- * @param {object} models
  * @returns {Router}
  * @see http://expressjs.com/en/4x/api.html#express.router
  */
 function init() {
   const router = express.Router()
-  router.get('/', middleware())
+  router.get('/', getCoordinates())
   return router
 }
 

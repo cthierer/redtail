@@ -9,6 +9,7 @@ import * as filter from '../filter'
 
 /**
  * @param {object} models
+ * @param {Sequelize} sequelize
  * @returns {Router}
  * @see http://expressjs.com/en/4x/api.html#express.router
  */
@@ -16,12 +17,10 @@ function init(models, sequelize) {
   const router = express.Router()
 
   router.get('/',
-    filter.middleware.loadPaging(),
     filter.middleware.loadSort(['name', 'area'], 'name'),
     filter.middleware.loadMatch('name', 'search', false),
     core.middleware.list(models.Neighborhood),
-    core.middleware.count(models.Neighborhood),
-    filter.middleware.setPagingLinks()
+    core.middleware.count(models.Neighborhood)
   )
 
   router.get('/reports',

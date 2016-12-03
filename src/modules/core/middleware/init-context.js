@@ -9,7 +9,7 @@ import State from '../models/state'
  * loaded by various middleware in order to generate a response. Middleware
  * should _only_ set values on the request context.
  *
- * The request context is loaded on `req.ctx`.
+ * The request context is loaded on `req.state`.
  *
  * @returns {function} Middleware function.
  * @see {State}

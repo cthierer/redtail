@@ -7,4 +7,9 @@ import loadAll from './load-all'
 import saveData from './save-data'
 import remove from './remove'
 
-export { initState, loadAll, saveData, remove }
+export {
+  initState,
+  loadAll,
+  saveData,
+  remove
+}

@@ -129,7 +129,7 @@
         <fieldset>
           <legend>Assign to</legend>
           <p class="form-text text-muted">
-            Which city department whould handle this report?
+            Which city department should handle this report?
           </p>
           <div class="row">
             <div class="col-md-12">
@@ -202,17 +202,18 @@
     const leaflet = this.mixin('leaflet').leaflet
     const helpers = this.mixin('rodents').rodents
 
-    this.rodent = opts.rodent || {}
-    this.marker = null
+    this.rodent = opts.rodent || {}       // rodent being edited
+    this.marker = null                    // map marker for this rodent
 
     if (this.rodent && this.rodent.latitude && this.rodent.longitude) {
+      // rodent has a location, initialize the marker
       this.marker = leaflet.marker([this.rodent.longitude, this.rodent.latitude])
     }
 
-    this.neighborhoods = this.initState()
-    this.agencies = this.initState()
-    this.sources = this.initState()
-    this.statuses = this.initState()
+    this.neighborhoods = this.initState() // lookup all neighborhoods
+    this.agencies = this.initState()      // lookup all agencies
+    this.sources = this.initState()       // lookup all sources
+    this.statuses = this.initState()      // lookup all statuses
 
     this.neighborhoods.on('core.state.updated', (updated) => {
       this.update({ neighborhoods: updated })

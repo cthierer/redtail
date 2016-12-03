@@ -10,8 +10,10 @@ import * as data from '../../data'
  * @type {object}
  */
 const tags = {
+  listDetails: 'neighborhoods-list-details',
   listItem: 'neighborhoods-list-item',
-  list: 'neighborhoods-list'
+  list: 'neighborhoods-list',
+  map: 'neighborhoods-map'
 }
 
 /**

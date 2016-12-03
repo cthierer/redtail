@@ -1,4 +1,4 @@
-<core-header>
+<redtail-header>
   <nav class="navbar navbar-full navbar-dark bg-inverse">
     <div class="container">
       <h1 class="navbar-brand mb-0">
@@ -16,4 +16,4 @@
     font-size: 30px;
   }
   </style>
-</core-header>
+</redtail-header>

@@ -3,12 +3,15 @@
  */
 
 import { getDataAsJSON } from '../data/http'
+import middleware from './middleware'
+import router from './router'
 
 /**
  * Geocode an address using the US Census Geocoder. The geocoding service
  * is configured in the configuration file under the `geocoder` key.
  * @param {object} address The address to geocode, incluidng the street,
  *  city, state, and Zip.
+ * @param {object} config The geocoding configuration settings.
  * @returns {object} The result of geocoding, including a latitude and
  *  longitude attribute.
  * @see https://geocoding.geo.census.gov/geocoder/Geocoding_Services_API.pdf
@@ -40,4 +43,8 @@ async function geocode(address, config) {
 }
 
 export default { geocode }
-export { geocode }
+export {
+  geocode,
+  middleware,
+  router
+}

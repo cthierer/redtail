@@ -19,6 +19,9 @@ const LEGAL_ORDER = ['asc', 'desc']
  * Triggers the error handler if the sort parameters are invalid.
  *
  * @param {array} fields The fields that are allowed to be sorted on.
+ * @param {string} defaultField The default field to sort on, if no other field
+ *  is specified; or, if another field is specified, then sort on this field
+ *  as a secondary sort. Optional.
  * @param {string} defaultOrder The default direction that results should be
  *  sorted in, if an order isn't provided.
  * @returns {function} Middleware function.
@@ -38,6 +41,7 @@ function loadSort(fields = [], defaultField = null, defaultOrder = LEGAL_ORDER[0
         return last
       }
 
+      // expect parameter as "field,direction" - split the field into parts
       const parts = sort.split(',')
 
       try {
@@ -63,11 +67,13 @@ function loadSort(fields = [], defaultField = null, defaultOrder = LEGAL_ORDER[0
     }, [])
 
     if (errors.length) {
+      // the user made a bad sort request - don't process
       req.ctx.status = 400
       next(errors)
     }
 
     if (defaultField && !req.ctx.sort.getDirection(defaultField)) {
+      // default field has not already been set, append it to the sort
       req.ctx.sort.addSort(defaultField, defaultOrder)
     }
 

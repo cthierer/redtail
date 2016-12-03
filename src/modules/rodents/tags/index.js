@@ -11,9 +11,12 @@ import * as data from '../../data'
  * @type {object}
  */
 const tags = {
+  addButton: 'rodents-add-button',
+  editButton: 'rodents-edit-button',
   createForm: 'rodents-form',
   editForm: 'rodents-form',
-  mapDetails: 'rodents-map-details'
+  mapDetails: 'rodents-map-details',
+  removeButton: 'rodents-remove-button'
 }
 
 /**
@@ -53,7 +56,7 @@ async function init(route, mount, mixin, config) {
       loadAll: actions.loadAll(rodentModel),
       save: actions.saveData(rodentModel),
       remove: actions.remove(rodentModel),
-      loadNeighborhoods: actions.loadAll(neighborhoodsModel, { order: ['name', 'asc'], limit: 500 }),
+      loadNeighborhoods: actions.loadAll(neighborhoodsModel, { order: ['name', 'asc'] }),
       loadAgencies: actions.loadAll(agenciesModel, { order: ['name', 'asc'] }),
       loadSources: actions.loadAll(sourcesModel, { order: ['title', 'asc'] }),
       loadStatuses: actions.loadAll(statusesModel, { order: ['title', 'asc'] }),

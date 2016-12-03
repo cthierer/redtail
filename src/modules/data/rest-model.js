@@ -33,6 +33,8 @@ class RESTModel {
    * @constructor
    * @param {string} baseUrl The base URL to the remote service.
    * @param {string} endpoint The path to the model-specific endpoint.
+   * @param {string} modelName The name of this model, used mostly for
+   *  developer convenience.
    */
   constructor(baseUrl, endpoint, modelName) {
     /**
@@ -47,6 +49,10 @@ class RESTModel {
      */
     this.endpoint = endpoint
 
+    /**
+     * The name of the model.
+     * @type {string}
+     */
     this.modelName = modelName
 
     /**
@@ -87,11 +93,27 @@ class RESTModel {
     return http.getDataAsJSON({ url, query })
   }
 
+  /**
+   * Find a model instance with the specified ID.
+   * @param {string} id The ID of the model instance to retrieve.
+   * @returns {Promise} Resolves to a single model instance from the remote
+   *  data service.
+   */
   findById(id) {
     const url = utils.urls.join(this.url, id)
     return http.getDataAsJSON({ url })
   }
 
+  /**
+   * Save data as a new instance of this model.
+   *
+   * If the data includes an ID attribute, than this will issue a PUT request
+   * to replace an existing entity on the database. Otherwise, this will issue
+   * a POST request to create a new entity.
+   *
+   * @param {object} data The data to save.
+   * @returns {Promise} Resolves to the saved entity on success.
+   */
   save(data) {
     const url = this.url
 
@@ -102,6 +124,11 @@ class RESTModel {
     return http.postDataAsJSON(data, { url })
   }
 
+  /**
+   * Delete an entity from the remote service.
+   * @param {string} id The ID of the entity to delete.
+   * @returns {Promise} Resolves when the operation is complete.
+   */
   remove(id) {
     const url = utils.urls.join(this.url, id)
     return http.deleteData({ url })

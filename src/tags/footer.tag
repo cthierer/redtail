@@ -1,4 +1,4 @@
-<core-footer>
+<redtail-footer>
   <div class="container">
     <div class="row">
       <div class="col-sm-4">
@@ -78,4 +78,4 @@
     text-decoration: none;
   }
   </style>
-</core-footer>
+</redtail-footer>

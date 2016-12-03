@@ -10,8 +10,8 @@ import bodyParser from 'body-parser'
 import cors from 'cors'
 import compression from 'compression'
 import models, { sequelize } from './modules/models'
-import geocoder from './modules/geocoder/router'
 import * as Logger from './modules/logger'
+import * as geocoder from './modules/geocoder'
 import * as core from './modules/core'
 import * as neighborhoods from './modules/neighborhoods'
 import * as rodents from './modules/rodents'
@@ -23,7 +23,8 @@ import * as statuses from './modules/statuses'
 /**
  * The port that the server should be started on. Loaded from the configuration
  * file at `redtail.api_base.port`, which can be set either in the
- * configuration file, or using the `PORT` environment variable.
+ * configuration file. The service starting this server may chose to ignore
+ * this configuration value.
  * @type {number}
  */
 const port = parseInt(config.get('redtail.api_base.port'))
@@ -42,22 +43,24 @@ const logger = Logger.get('server')
  */
 const app = express()
 
+/**
+ * The application top-level paths, from the configuration.
+ * @type {object}
+ */
 const paths = config.get('redtail.paths')
 
-app.use(compression())
-app.use(bodyParser.json())
-
+// global middleware
 app.use(
+  compression(),                  // enable gzip compression
+  bodyParser.json(),              // parse body as JSON
   core.middleware.initContext(),  // initialize req.ctx
   core.middleware.generateId(),   // initilaize req.ctx.requestId
   core.middleware.initLogger()    // initialize req.ctx.logger
 )
 
+// enable CORS, if allowed by configuration
 if (config.get('redtail.cors.enabled')) {
-  const corsMiddleware = cors({
-    exposedHeaders: ['X-Request-Id']
-  })
-
+  const corsMiddleware = cors({ exposedHeaders: ['X-Request-Id'] })
   app.use(corsMiddleware)
   app.options('*', corsMiddleware)
 }
@@ -70,6 +73,7 @@ app.use('/docs', express.static('doc'))
 app.use('/coverage', express.static('coverage/lcov-report'))
 
 // serve client configuration
+// TODO load as middleware
 app.use(paths.config, (req, res, next) => {
   const redtailConfig = config.get('redtail')
   const geocoderConfig = config.get('geocoder')
@@ -86,10 +90,8 @@ app.use(paths.config, (req, res, next) => {
   next()
 })
 
-// proxy geocoding
-app.use(paths.geocodes, geocoder())
-
 // mount the sub applications
+app.use(paths.geocodes, geocoder.router())
 app.use(paths.neighborhoods, neighborhoods.router(models, sequelize))
 app.use(paths.rodents, rodents.router(models, sequelize))
 app.use(paths.establishments, establishments.router(models, sequelize))
@@ -97,6 +99,7 @@ app.use(paths.agencies, agencies.router(models, sequelize))
 app.use(paths.sources, sources.router(models, sequelize))
 app.use(paths.statuses, statuses.router(models, sequelize))
 
+// global middleware at the tail end of the chain
 app.use(
   core.middleware.sendResult(),     // send the result to the client
   core.middleware.handleError(),    // handle any errors

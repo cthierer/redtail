@@ -2,9 +2,22 @@
  * @module redtail/modules/neighborhoods/middleware/listReports
  */
 
+/**
+ * Generate and list Neighborhood reports. Reports include aggregate data
+ * about relationships between Neighborhoods, Establishments, and Rodents.
+ * @param {Model} model The Neighborhood model.
+ * @param {Sequelize} sequelize Initialized sequelize instance.
+ * @returns {function} Middleware function.
+ */
 function listReports(model, sequelize) {
   return (req, res, next) => {
+    const logger = req.ctx.logger.child({ middleware: 'listReports', model_name: model.modelName })
     const options = req.ctx.getQueryOptions()
+
+    if (logger.debug()) {
+      logger.debug({ filter: options }, 'generating query to list all reports')
+    }
+
     /*
      * This raw query is not ideal, but could not get the Sequelize ORM to
      * produce an efficient query. My goal is to try to do as much sorting
@@ -41,10 +54,16 @@ function listReports(model, sequelize) {
       })
       .then(instances => instances.map(instance => instance.get()))
       .then((results) => {
+        if (logger.debug()) {
+          logger.debug({ count: results.length }, 'found %s results matching the filter',
+            results.length)
+        }
+
         req.ctx.status = 200
         req.ctx.result = results
         next()
       })
+      .catch(next)
   }
 }
 

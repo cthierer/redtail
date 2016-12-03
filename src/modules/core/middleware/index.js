@@ -4,28 +4,28 @@
 
 import count from './count'
 import create from './create'
-import list from './list'
 import generateId from './generate-id'
 import getById from './get-by-id'
+import handleError from './handle-error'
 import initContext from './init-context'
 import initLogger from './init-logger'
-import handleError from './handle-error'
+import list from './list'
 import recordResponse from './record-response'
+import remove from './remove'
 import sendResult from './send-result'
 import update from './update'
-import remove from './remove'
 
 export {
   count,
   create,
-  list,
   generateId,
   getById,
+  handleError,
   initContext,
   initLogger,
-  handleError,
+  list,
   recordResponse,
+  remove,
   sendResult,
-  update,
-  remove
+  update
 }

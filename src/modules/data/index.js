@@ -5,4 +5,7 @@
 import * as http from './http'
 import RESTModel from './rest-model'
 
-export { http, RESTModel }
+export {
+  http,
+  RESTModel
+}

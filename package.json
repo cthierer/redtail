@@ -32,7 +32,7 @@
     "bin:refreshData": "run-s bin:initTables bin:populateData",
     "bin:initTables": "node app/bin/initTables",
     "bin:populateData": "node app/bin/populateData",
-    "bin:importData": "node app/bin/importData sql/data.sql"
+    "bin:importData": "node app/bin/importData db/data.sql"
   },
   "repository": {
     "type": "git",

@@ -3,6 +3,9 @@
  * environment variable (defaults to port 3000).
  *
  * File will not be run through babel, so it must use standard Node 6 features.
+ *
+ * @example
+ * PORT=3000 node server
  */
 
 const redtail = require('./app')
