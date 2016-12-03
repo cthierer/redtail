@@ -14,7 +14,7 @@ import Sequelize from 'sequelize'
 function initSource(sequelize, options = {}) {
   const Source = sequelize.define('Source', {
     title: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(255),
       allowNull: false,
       unique: true
     }

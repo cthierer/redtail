@@ -14,19 +14,19 @@ import Sequelize from 'sequelize'
 function initEstablishment(sequelize, options = {}) {
   const Establishment = sequelize.define('Establishment', {
     name: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(255),
       allowNull: false
     },
     street: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(255),
       allowNull: false
     },
     city: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(255),
       allowNull: false
     },
     state: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(2),
       allowNull: false,
       validate: {
         len: {
@@ -40,7 +40,7 @@ function initEstablishment(sequelize, options = {}) {
       }
     },
     zip: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(10),
       allowNull: false,
       validate: {
         is: {

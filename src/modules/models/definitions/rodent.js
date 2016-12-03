@@ -14,15 +14,15 @@ import Sequelize from 'sequelize'
 function initRodent(sequelize, options = {}) {
   const Rodent = sequelize.define('Rodent', {
     street: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(255),
       allowNull: false
     },
     city: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(255),
       allowNull: false
     },
     state: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(2),
       allowNull: false,
       validate: {
         len: {
@@ -36,7 +36,7 @@ function initRodent(sequelize, options = {}) {
       }
     },
     zip: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(10),
       allowNull: false,
       validate: {
         is: {
@@ -53,7 +53,7 @@ function initRodent(sequelize, options = {}) {
       type: Sequelize.DOUBLE,
       validate: { min: -180, max: 180 }
     },
-    notes: Sequelize.STRING
+    notes: Sequelize.TEXT
   }, Object.assign(options || {}, {
     tableName: 'rodents',
     classMethods: {

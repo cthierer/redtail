@@ -14,7 +14,7 @@ import Sequelize from 'sequelize'
 function initNeighborhood(sequelize, options = {}) {
   const Neighborhood = sequelize.define('Neighborhood', {
     name: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(255),
       allowNull: false,
       unique: true
     },

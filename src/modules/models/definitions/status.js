@@ -14,7 +14,7 @@ import Sequelize from 'sequelize'
 function initStatus(sequelize, options = {}) {
   const Status = sequelize.define('Status', {
     title: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(255),
       allowNull: false,
       unique: true
     }

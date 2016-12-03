@@ -42,6 +42,7 @@
               placeholder="100 Holliday St"
               onchange={ geocode }
               required
+              maxlength="255"
               value={ rodent.street }>
             <small class="form-text text-muted">
               Enter the street address where the rodent was spotted.
@@ -56,6 +57,7 @@
               onchange={ geocode }
               readonly
               required
+              maxlength="255"
               value={ rodent.city || "Baltimore" }>
           </div>
           <div class="form-group">
@@ -67,6 +69,7 @@
               onchange={ geocode }
               readonly
               required
+              maxlength="2"
               value={ rodent.state || "MD" }>
           </div>
           <div class="form-group">
@@ -78,6 +81,7 @@
               placeholder="21202"
               onchange={ geocode }
               required
+              maxlength="10"
               pattern="[0-9]\{5\}(-[0-9]\{4\})?"
               value={ rodent.zip }>
             <small class="form-text text-muted">
@@ -183,7 +187,8 @@
             <textarea name="notes"
               class="form-control"
               id="rodentNotes"
-              value={ rodent.notes }></textarea>
+              value={ rodent.notes }
+              maxlength="5000"></textarea>
           </div>
         </div>
       </div>

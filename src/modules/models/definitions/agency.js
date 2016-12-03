@@ -14,7 +14,7 @@ import Sequelize from 'sequelize'
 function initAgency(sequelize, options = {}) {
   const Agency = sequelize.define('Agency', {
     name: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(255),
       allowNull: false,
       unique: true
     }
