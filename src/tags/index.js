@@ -1,17 +1,13 @@
 /**
- * @module redtail/modules/neighborhoods/tags
+ * @module redtail//tags
  */
-
-import * as actions from '../../core/actions'
-import * as data from '../../data'
 
 /**
  * Mapping of identifiers to Riot tags mountable by this module.
  * @type {object}
  */
 const tags = {
-  listItem: 'neighborhoods-list-item',
-  list: 'neighborhoods-list'
+  landing: 'redtail-landing'
 }
 
 /**
@@ -27,15 +23,9 @@ const tags = {
  * @see http://riotjs.com/api/route/
  * @see http://riotjs.com/api/#mixins
  */
-async function init(route, mount, mixin, config) {
-  const model = new data.RESTModel(config.api_base, `${config.endpoints.neighborhoods}/reports`)
-
-  mixin('neighborhoods', {
-    loadAll: actions.loadAll(model)
-  })
-
-  mixin('mapConfig', {
-    mapConfig: config.map
+async function init(route, mount) {
+  route('/', () => {
+    mount(tags.landing)
   })
 }
 

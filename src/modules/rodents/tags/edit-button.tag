@@ -1,5 +1,5 @@
 <rodents-edit-button>
-  <button class={ btn: true, btn-sm: opts.sm } onclick={ gotoEdit }>
+  <button class={ btn: true, btn-sm: opts.sm, btn-primary: true } onclick={ gotoEdit }>
     <core-icon name="zap"></core-icon>
     <yield/>
   </button>

@@ -1,5 +1,5 @@
 <rodents-remove-button>
-  <button class={ btn: true, btn-sm: opts.sm } onclick={ doDelete }>
+  <button class={ btn: true, btn-sm: opts.sm, btn-danger: true } onclick={ doDelete }>
     <core-icon name="x"></core-icon>
     <yield/>
   </button>

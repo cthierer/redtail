@@ -1,14 +1,5 @@
 <neighborhoods-list>
-  <h2>Rodent Tracker</h2>
   <div class="neighborhood-listing">
-    <div class="row">
-      <div class="col-sm-12 toolbar">
-        <button class="btn btn-primary" onclick={ reportRodent }>
-          <core-icon name="diff-added"></core-icon>
-          Report rodent
-        </button>
-      </div>
-    </div>
     <div class="row">
       <div class="col-md-7 sort">
         <h3>Sort by</h3>
@@ -24,7 +15,7 @@
         <form onsubmit={ filter }>
           <filter-match name="search" filter={ state.filter }>
             <core-icon name="search" alt="Search"></core-icon>
-            Name
+            <span class="hidden-md-down">Name</span>
           </filter-match>
         </form>
       </div>
@@ -68,18 +59,8 @@
     // tags handle updating the state and updating
     // used to prevent the default form action when the user presses "enter"
     this.filter = () => false
-
-    this.reportRodent = () => {
-      riot.route('rodents/create')
-      return false
-    }
   </script>
   <style scoped>
-    .toolbar {
-      margin-top: 7px;
-      margin-bottom: 15px;
-    }
-
     .sort .list-inline {
       display: inline;
     }

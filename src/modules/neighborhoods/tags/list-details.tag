@@ -7,20 +7,33 @@
     </div>
     <div class="col-md-3">
       <div class="data-field-group" show={ recentRodent }>
+        <h6 class="font-weight-bold">Last reported sighting</h6>
         <div class="data-field">
-          <div class="data-label">Last reported</div>
+          <div class="data-label">Date</div>
           <div class="data-value">
             { moment(recentRodent.created_at).calendar() }
           </div>
+        </div>
+        <div class="data-field">
+          <div class="data-label">Street</div>
           <div class="data-value">
             { recentRodent.street }
           </div>
-          <div class="data-value">
-            { recentRodent.status.title } &dash; { recentRodent.notes }
-          </div>
-          <rodents-edit-button id={ recentRodent.id } state={ opts.state }>Edit</rodents-edit-button>
-          <rodents-remove-button id={ recentRodent.id } state={ opts.state }>Delete</rodents-remove-button>
         </div>
+        <div class="data-field">
+          <div class="data-label">Status</div>
+          <div class="data-value">
+            { recentRodent.status.title }
+          </div>
+        </div>
+        <div class="data-field" if={ recentRodent.notes }>
+          <div class="data-label">Notes</div>
+          <div class="data-value">
+            { recentRodent.notes }
+          </div>
+        </div>
+        <rodents-edit-button id={ recentRodent.id } state={ opts.state }>Edit</rodents-edit-button>
+        <rodents-remove-button id={ recentRodent.id } state={ opts.state }>Delete</rodents-remove-button>
       </div>
     </div>
   </div>

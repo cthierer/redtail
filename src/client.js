@@ -17,6 +17,7 @@ import * as utils from './modules/utils'
 import * as neighborhoods from './modules/neighborhoods/tags'
 import * as rodents from './modules/rodents/tags'
 import * as establishments from './modules/establishments/tags'
+import { init } from './tags'
 
 /* eslint-env browser */
 
@@ -77,9 +78,6 @@ riot.mixin({
 // namespaced mixins
 riot.mixin('leaflet', { leaflet })
 
-// redirect root to neighborhoods
-route('')('', () => riot.route('neighborhoods/'))
-
 // initialization:
 // 1. get the application configuration
 // 2. initialize the client components
@@ -88,6 +86,7 @@ route('')('', () => riot.route('neighborhoods/'))
 http.getDataAsJSON({ url: 'API_CONFIG_URL' })
   .then(response => response.result)
   .then(config => Promise.all([
+    init(route(''), mount(), mixin(), config),
     neighborhoods.init(route('neighborhoods'), mount(), mixin(), config),
     rodents.init(route('rodents'), mount(), mixin(), config),
     establishments.init(route('establishments'), mount(), mixin(), config)

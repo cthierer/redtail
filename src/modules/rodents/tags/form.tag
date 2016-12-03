@@ -21,6 +21,9 @@
                 { name }
               </option>
             </select>
+            <small class="form-text text-muted">
+              Select the neighborhood where the rodent was spotted.
+            </small>
           </div>
         </div>
       </div>
@@ -36,9 +39,13 @@
               name="street"
               class="form-control"
               id="rodentStreet"
+              placeholder="100 Holliday St"
               onchange={ geocode }
               required
               value={ rodent.street }>
+            <small class="form-text text-muted">
+              Enter the street address where the rodent was spotted.
+            </small>
           </div>
           <div class="form-group">
             <label for="rodentCity">City</label>
@@ -47,7 +54,7 @@
               class="form-control"
               id="rodentCity"
               onchange={ geocode }
-              disabled
+              readonly
               required
               value={ rodent.city || "Baltimore" }>
           </div>
@@ -58,7 +65,7 @@
               class="form-control"
               id="rodentState"
               onchange={ geocode }
-              disabled
+              readonly
               required
               value={ rodent.state || "MD" }>
           </div>
@@ -68,10 +75,14 @@
               name="zip"
               class="form-control"
               id="rodentZip"
+              placeholder="21202"
               onchange={ geocode }
               required
               pattern="[0-9]\{5\}(-[0-9]\{4\})?"
               value={ rodent.zip }>
+            <small class="form-text text-muted">
+              Supports Zip or Zip+4.
+            </small>
           </div>
         </div>
         <div class="col-md-4">
@@ -80,6 +91,10 @@
             <input type="hidden" name="latitude" value={ getLat() }>
             <input type="hidden" name="longitude" value={ getLng() }>
             <core-map markers={ marker ? [marker] : [] }></core-map>
+            <small class="form-text text-muted">
+              Location is automatically calculated based on the entered
+              street and Zip code.
+            </small>
           </div>
         </div>
       </div>
@@ -89,6 +104,9 @@
       <div class="col-md-4">
         <fieldset class="form-group">
           <legend>Source</legend>
+          <p class="form-text text-muted">
+            Where did this report originate?
+          </p>
           <div class="row">
             <div class="col-md-12">
               <div each={ sources.result } class="form-check">
@@ -110,6 +128,9 @@
       <div class="col-md-4">
         <fieldset>
           <legend>Assign to</legend>
+          <p class="form-text text-muted">
+            Which city department whould handle this report?
+          </p>
           <div class="row">
             <div class="col-md-12">
               <div each={ agencies.result } class="form-check">
@@ -131,6 +152,9 @@
       <div class="col-md-4">
         <fieldset>
           <legend>Status</legend>
+          <p class="form-text text-muted">
+            Is this still an active problem?
+          </p>
           <div class="row">
             <div class="col-md-12">
               <div each={ statuses.result } class="form-check">
@@ -168,6 +192,9 @@
     <div class="toolbar form-group">
       <button type="submit" class="btn btn-primary btn-lg">
         { rodent.id ? 'Update' : 'Create' }
+      </button>
+      <button class="btn btn-secondary btn-lg" onclick={ cancel }>
+        Cancel
       </button>
     </div>
   </form>
@@ -248,7 +275,7 @@
       saveState.data = data
       saveState.on('core.state.updated', (updated) => {
         if (updated && updated.result) {
-          riot.route('neighborhoods')
+          riot.route('/')
         }
       })
       saveState.on('core.state.notify.error', () => {
@@ -257,6 +284,10 @@
 
       helpers.save(saveState)
       return false
+    }
+
+    this.cancel = () => {
+      riot.route('/')
     }
   </script>
   <style scoped>

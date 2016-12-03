@@ -35,12 +35,28 @@ $color-featured-dark: #6d0e0e;
   }
 }
 
+.btn-primary {
+  background-color: #696969;
+  border-color: #696969;
+
+  &:active,
+  &:focus,
+  &:hover {
+    background-color: #2F4F4F;
+    border-color: #2F4F4F;
+  }
+}
+
 body {
   background-color: $color-featured-dark;
 
   .wrapper {
     background-color: #fff;
   }
+}
+
+button .octicon {
+  margin-right: 3px;
 }
 
 #redtailFooter {

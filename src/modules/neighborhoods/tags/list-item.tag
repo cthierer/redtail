@@ -39,7 +39,7 @@
       </neighborhoods-list-details>
     </div>
     <div class="card-footer">
-      <button class="btn" onclick={ toggleDetails }>
+      <button class="btn btn-secondary" onclick={ toggleDetails }>
         Details
         <core-icon name="triangle-up" show={ showDetails }></core-icon>
         <core-icon name="triangle-down" hide={ showDetails }></core-icon>
