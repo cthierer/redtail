@@ -19,6 +19,11 @@ import * as establishments from './modules/establishments'
 import * as agencies from './modules/agencies'
 import * as sources from './modules/sources'
 import * as statuses from './modules/statuses'
+import loadProfiler, { requestTime, requestMemory } from './modules/profiler'
+
+// load application profilers
+// this must be done before the application is instantiated
+loadProfiler([requestTime(), requestMemory()])
 
 /**
  * The port that the server should be started on. Loaded from the configuration
@@ -60,7 +65,7 @@ app.use(
 
 // enable CORS, if allowed by configuration
 if (config.get('redtail.cors.enabled')) {
-  const corsMiddleware = cors({ exposedHeaders: ['X-Request-Id'] })
+  const corsMiddleware = cors({ exposedHeaders: ['X-Request-Id', 'X-Instr-Tag'] })
   app.use(corsMiddleware)
   app.options('*', corsMiddleware)
 }
