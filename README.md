@@ -23,13 +23,13 @@ coordinates pulled from the [US Census Geocoder](https://geocoding.geo.census.go
 Maps are pulled from [Mapbox](https://www.mapbox.com/).
 
 Users may also submit new rodent reports, edit existing reports, or delete
-reports through a browser-based application, or through a REST API.
+reports through the browser-based application, or through the REST API.
 
 ## Overview
 
 The application includes two components:
 
-  1. A browser-based application based on [Riot](http://riotjs.com/).
+  1. A browser-based application built on [Riot](http://riotjs.com/).
   2. A server-side application implemented using REST-ful concepts, built on
     [express](http://expressjs.com/).
 
@@ -104,7 +104,7 @@ setting the "PORT" environment variable:
 
 The client application is built using [webpack](https://webpack.github.io/).
 
-ES6 and ES7 code is generated into browser-compatible and Node-compatible
+ES6 and ES7 code is compiled into browser-compatible and Node-compatible
 Javascript using [babel](https://babeljs.io/).
 
 ### Logging
@@ -128,7 +128,7 @@ difficult to read them. Log output can be piped through the
 The Bunyan CLI also includes the ability to search logs for specific
 conditions. For example, every request to the redtail server is given an
 unique identifier, which is returned to the client in the `X-Request-Id` header.
-In the logs, to find all logs for a request with an ID of "A1234":
+To find all logs for a request with an ID of "A1234":
 
 ```
 %> cat redtail.log | ./node_modules/.bin/bunyan -c 'this.reqId == "A1234"'

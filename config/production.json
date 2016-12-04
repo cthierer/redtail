@@ -12,5 +12,5 @@
   "logger": {
     "level": "info",
     "streams": []
-  },
+  }
 }
