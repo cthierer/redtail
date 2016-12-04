@@ -45,6 +45,12 @@
   "logger": {
     "name": "redtail",
     "level": "info",
+    "streams": [
+      {
+        "path": "./redtail.log",
+        "level": "info"
+      }
+    ],
     "src": false
   },
   "models": {
@@ -78,7 +84,7 @@
       }
     }
   },
-  "establishments":{
+  "establishments": {
     "populate": {
       "remote": {
         "method": "GET",
@@ -131,7 +137,7 @@
           "column": "name",
           "create": true
         },
-        "neighborhood":{
+        "neighborhood": {
           "ref": "belongsTo",
           "model": "Neighborhood",
           "column": "name",

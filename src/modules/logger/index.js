@@ -6,11 +6,37 @@ import bunyan from 'bunyan'
 import Config from 'config'
 
 /**
+ * Check if the logger should be muted (i.e., no logs shoudl be written to
+ * stdout). Can be set from a global `muteLogger` variable, or from
+ * an environment variable "MUTE_LOGGER".
+ * @type {boolean}
+ */
+const MUTED = global.muteLogger || process.env.MUTE_LOGGER || false
+
+/**
+ * Key for disabling loging.
+ * @type {integer}
+ */
+const OFF = bunyan.FATAL + 1
+
+/**
  * The application-wide logger configuration. Loaded from the `logger`
  * configuration key.
  * @type {object}
  */
-const globalConfig = Config.get('logger')
+const globalConfig = Object.assign({}, Config.get('logger'))
+
+if (MUTED) {
+  // disable logging
+  globalConfig.level = OFF
+  globalConfig.streams = []
+} else if (globalConfig.streams) {
+  // always go to stdout
+  // can't specify this in JSON config file
+  globalConfig.streams.push({
+    stream: process.stdout
+  })
+}
 
 /**
  * Load the logging configuration for the specified module. If no configuration

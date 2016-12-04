@@ -8,5 +8,9 @@
     "cors": {
       "enabled": true
     }
-  }
+  },
+  "logger": {
+    "level": "info",
+    "streams": []
+  },
 }
